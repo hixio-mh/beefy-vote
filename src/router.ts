@@ -13,12 +13,12 @@ const routes: Array<RouteConfig> = [
   { path: '/:key', name: 'proposals', component: Proposals },
   { path: '/:key/:tab', name: 'proposals-tab', component: Proposals },
   { path: '/', name: 'home', component: Home },
-  { path: '/*', name: 'error-404', beforeEnter: (to, from, next) => next('/') }
+  { path: '/*', name: 'error-404', beforeEnter: (to, from, next) => next('/') },
 ];
 
 const router = new VueRouter({
   mode: 'hash',
-  routes
+  routes,
 });
 
 export default router;

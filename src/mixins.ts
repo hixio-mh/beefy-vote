@@ -11,11 +11,11 @@ const modules = Object.entries(store.state).map(module => module[0]);
 export default {
   data() {
     return {
-      config
+      config,
     };
   },
   computed: {
-    ...mapState(modules)
+    ...mapState(modules),
   },
   methods: {
     _ms(number) {
@@ -30,8 +30,7 @@ export default {
       if (key === 'symbol') limit = 6;
       if (key === 'name') limit = 64;
       if (key === 'choice') limit = 12;
-      if (limit)
-        return str.length > limit ? `${str.slice(0, limit).trim()}...` : str;
+      if (limit) return str.length > limit ? `${str.slice(0, limit).trim()}...` : str;
       return shorten(str);
     },
     _ipfsUrl(ipfsHash: string): string {
@@ -39,6 +38,6 @@ export default {
     },
     _etherscanLink(str: string, type: string): string {
       return etherscanLink(str, type);
-    }
-  }
+    },
+  },
 };

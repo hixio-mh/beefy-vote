@@ -19,9 +19,7 @@ Vue.use(TextareaAutosize);
 const requireComponent = require.context('@/components', true, /[\w-]+\.vue$/);
 requireComponent.keys().forEach(fileName => {
   const componentConfig = requireComponent(fileName);
-  const componentName = upperFirst(
-    camelCase(fileName.replace(/^\.\//, '').replace(/\.\w+$/, ''))
-  );
+  const componentName = upperFirst(camelCase(fileName.replace(/^\.\//, '').replace(/\.\w+$/, '')));
   Vue.component(componentName, componentConfig.default || componentConfig);
 });
 
@@ -35,5 +33,5 @@ new Vue({
   i18n,
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
 }).$mount('#app');

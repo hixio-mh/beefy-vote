@@ -14,7 +14,7 @@ Object.entries(config.connectors).forEach((connector: any) => {
   options.connectors.push({
     key: connector[0],
     connector: connectors[connector[0]],
-    options: connector[1].options
+    options: connector[1].options,
   });
 });
 

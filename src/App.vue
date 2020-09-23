@@ -16,7 +16,7 @@ import { mapActions } from 'vuex';
 
 export default {
   methods: {
-    ...mapActions(['init'])
+    ...mapActions(['init']),
   },
   mounted() {
     this.init();
@@ -28,7 +28,7 @@ export default {
       } catch (e) {
         return {};
       }
-    }
-  }
+    },
+  },
 };
 </script>
