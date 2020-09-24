@@ -2,25 +2,24 @@
 
 Snapshot is a simple website with easy to verify and hard to contest results. 
 
-## Project setup
-```
-npm install
-```
+## Dependencies
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+### yarn  
+https://yarnpkg.com/
 
-### Compiles and minifies for production
-```
-npm run build
-```
+Safe, stable, reproducible projects
 
-### Lints and fixes files
-```
-npm run lint
-```
+### prettier  
+https://prettier.io/
+
+Opinionated Code Formatter
+
+## Env  
+Required env vars: 
+
+VUE_APP_CHAIN_ID=56  
+VUE_APP_HUB_URL=https://vote.beefy.finance  
+VUE_APP_IPFS_NODE=ipfs.io  
 
 ## License
 
