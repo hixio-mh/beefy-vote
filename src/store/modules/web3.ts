@@ -157,22 +157,21 @@ const actions = {
     }
   },
   lookupAddress: async ({ commit }, address) => {
-    console.log('>>>> LOOKUP ADDRESS');
-    // TODO: check if this hardcoded validation is required
-    // if (state.network.chainId !== 1) return;
+    // FIXME: remove once BNS is implemented
+    return;
 
     try {
       const name = await rpcProvider.lookupAddress(address);
       commit('LOOKUP_ADDRESS_SUCCESS', name);
       return name;
     } catch (e) {
+      console.log(e)
       return Promise.reject();
     }
   },
   resolveName: async ({ commit }, name) => {
-    console.log('>>>> RESOLVE NAME');
-    // TODO: check if this hardcoded validation is required
-    // if (state.network.chainId !== 1) return;
+    // FIXME: remove once BNS is implemented
+    return;
 
     try {
       const address = await rpcProvider.resolveName(name);
