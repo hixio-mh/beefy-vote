@@ -1,11 +1,10 @@
 @import './vars';
 @import '~@primer/css';
 @import './assets/fonts/iconfont.css';
-
 :root {
   --primary-color: #384aff;
-  --bg-color: white;
-  --text-color: #586069;
+  --bg-color: #F9F3EB;
+  --text-color: #000;
   --link-color: #111111;
   --heading-color: #111111;
   --border-color: #d1d5da;
@@ -13,22 +12,10 @@
   --block-bg: transparent;
 }
 
-@font-face {
-  font-family: 'Calibre-Medium';
-  src: url('./assets/fonts/Calibre-Medium.eot');
-  src: url('./assets/fonts/Calibre-Medium.eot?#iefix') format('embedded-opentype'), url('./assets/fonts/Calibre-Medium.woff') format('woff'),
-    url('./assets/fonts/Calibre-Medium.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Calibre-Semibold';
-  src: url('./assets/fonts/Calibre-Semibold.eot');
-  src: url('./assets/fonts/Calibre-Semibold.eot?#iefix') format('embedded-opentype'), url('./assets/fonts/Calibre-Semibold.woff') format('woff'),
-    url('./assets/fonts/Calibre-Semibold.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+* {
+  font-family: 'proxima-nova', sans-serif;
+  color: #000;
+  text-rendering: optimizeLegibility;
 }
 
 html,
@@ -36,9 +23,6 @@ body,
 #app {
   background: var(--bg-color);
   color: var(--text-color);
-  font-family: $font-weight-normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 * {
@@ -50,11 +34,6 @@ h2,
 h3,
 h4 {
   color: var(--heading-color);
-  font-family: $font-weight-bold;
-}
-
-b {
-  font-family: $font-weight-bold;
 }
 
 p {
