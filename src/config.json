@@ -1,6 +1,6 @@
 {
   "env": "master",
-  "network": "mainnet",
+  "network": "testnet",
   "chainId": 56,
   "connectors": {
     "injected": {

@@ -20,9 +20,9 @@ export function clone(item) {
   return JSON.parse(JSON.stringify(item));
 }
 
-export function etherscanLink(str: string, type = 'address'): string {
-  const network = config.network === 'homestead' ? '' : `${config.network}.`;
-  return `https://${network}etherscan.io/${type}/${str}`;
+export function bscscanLink(str: string, type = 'address'): string {
+  const network = config.network === 'mainnet' ? '' : `${config.network}.`;
+  return `https://${network}bscscan.com/${type}/${str}`;
 }
 
 export function lsSet(key: string, value: any) {

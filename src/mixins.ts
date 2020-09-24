@@ -3,7 +3,7 @@ import numeral from 'numeral';
 import prettyMs from 'pretty-ms';
 import store from '@/store';
 import config from '@/helpers/config';
-import { shorten, etherscanLink } from '@/helpers/utils';
+import { shorten, bscscanLink } from '@/helpers/utils';
 
 // @ts-ignore
 const modules = Object.entries(store.state).map(module => module[0]);
@@ -36,8 +36,8 @@ export default {
     _ipfsUrl(ipfsHash: string): string {
       return `https://${process.env.VUE_APP_IPFS_NODE}/ipfs/${ipfsHash}`;
     },
-    _etherscanLink(str: string, type: string): string {
-      return etherscanLink(str, type);
+    _bsccanLink(str: string, type: string): string {
+      return bscscanLink(str, type);
     },
   },
 };
