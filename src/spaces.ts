@@ -1,5 +1,5 @@
-const requireSpace = require.context('@bonustrack/snapshot-spaces/spaces/', true, /[\w-]+\.json$/);
-const requireSkin = require.context('@bonustrack/snapshot-spaces/spaces/', true, /[\w-]+\.scss$/);
+const requireSpace = require.context('./spaces/', true, /[\w-]+\.json$/);
+const requireSkin = require.context('./spaces/', true, /[\w-]+\.scss$/);
 
 requireSkin.keys().map(file => requireSkin(file));
 

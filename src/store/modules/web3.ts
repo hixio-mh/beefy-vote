@@ -29,7 +29,7 @@ const state = {
   balances: {},
   blockNumber: 0,
   spaces: spaces[chainId],
-  network: config.networks[chainId]
+  network: config.networks[chainId],
 };
 
 const mutations = {
@@ -102,7 +102,7 @@ const mutations = {
   },
   GET_BLOCK_FAILURE(_state, payload) {
     console.debug('GET_BLOCK_FAILURE', payload);
-  }
+  },
 };
 
 const actions = {
@@ -140,17 +140,14 @@ const actions = {
           if (state.active) await dispatch('loadProvider');
         });
       }
-      const [network, accounts] = await Promise.all([
-        web3.getNetwork(),
-        web3.listAccounts()
-      ]);
+      const [network, accounts] = await Promise.all([web3.getNetwork(), web3.listAccounts()]);
       const account = accounts.length > 0 ? accounts[0] : null;
       const name = await dispatch('lookupAddress', account);
       commit('LOAD_PROVIDER_SUCCESS', {
         injectedLoaded: true,
         injectedChainId: network.chainId,
         account,
-        name
+        name,
       });
     } catch (e) {
       commit('LOAD_PROVIDER_FAILURE', e);
@@ -158,7 +155,9 @@ const actions = {
     }
   },
   lookupAddress: async ({ commit }, address) => {
-    if (state.network.chainId !== 1) return;
+    // TODO: check if this hardcoded validation is required
+    // if (state.network.chainId !== 1) return;
+
     try {
       const name = await rpcProvider.lookupAddress(address);
       commit('LOOKUP_ADDRESS_SUCCESS', name);
@@ -168,7 +167,9 @@ const actions = {
     }
   },
   resolveName: async ({ commit }, name) => {
-    if (state.network.chainId !== 1) return;
+    // TODO: check if this hardcoded validation is required
+    // if (state.network.chainId !== 1) return;
+
     try {
       const address = await rpcProvider.resolveName(name);
       commit('RESOLVE_NAME_SUCCESS', address);
@@ -177,19 +178,13 @@ const actions = {
       return Promise.reject();
     }
   },
-  sendTransaction: async (
-    { commit },
-    [contractType, contractAddress, action, params]
-  ) => {
+  sendTransaction: async ({ commit }, [contractType, contractAddress, action, params]) => {
     commit('SEND_TRANSACTION_REQUEST');
     try {
       const signer = web3.getSigner();
-      const contract = new Contract(
-        getAddress(contractAddress),
-        abi[contractType],
-        web3
-      );
+      const contract = new Contract(getAddress(contractAddress), abi[contractType], web3);
       const contractWithSigner = contract.connect(signer);
+
       const tx = await contractWithSigner[action](...params);
       await tx.wait();
       commit('SEND_TRANSACTION_SUCCESS');
@@ -221,11 +216,11 @@ const actions = {
       commit('GET_BLOCK_FAILURE', e);
       return Promise.reject();
     }
-  }
+  },
 };
 
 export default {
   state,
   mutations,
-  actions
+  actions,
 };

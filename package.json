@@ -1,7 +1,7 @@
 {
-  "name": "snapshot",
-  "version": "0.1.2",
-  "repository": "beefyfinance/beefy-snapshot",
+  "name": "beefy-vote",
+  "version": "0.1.0",
+  "repository": "beefyfinance/beefy-vote",
   "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@bonustrack/lock": "github:bonustrack/lock#e1437a340b578a1e5a48f37f935578ecdb8b51c8",
-    "@bonustrack/snapshot-spaces": "github:bonustrack/snapshot-spaces#master",
     "@bonustrack/snapshot.js": "github:bonustrack/snapshot.js#master",
     "@ethersproject/abi": "^5.0.1",
     "@ethersproject/address": "^5.0.1",

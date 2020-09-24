@@ -865,10 +865,6 @@
   version "0.1.0-beta.1"
   resolved "https://codeload.github.com/bonustrack/lock/tar.gz/e1437a340b578a1e5a48f37f935578ecdb8b51c8"
 
-"@bonustrack/snapshot-spaces@github:bonustrack/snapshot-spaces#master":
-  version "0.1.0"
-  resolved "https://codeload.github.com/bonustrack/snapshot-spaces/tar.gz/8dce014527a8ccee40d203a4ac41b83b853815d3"
-
 "@bonustrack/snapshot.js@github:bonustrack/snapshot.js#master":
   version "0.1.0"
   resolved "https://codeload.github.com/bonustrack/snapshot.js/tar.gz/8f6b330a8f75faf74cbcec898d2b9aba40ea0229"

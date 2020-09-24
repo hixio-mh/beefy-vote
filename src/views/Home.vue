@@ -1,11 +1,7 @@
 <template>
   <div>
     <Container :slim="true">
-      <router-link
-        v-for="space in spaces"
-        :key="space.address"
-        :to="{ name: 'proposals', params: { key: space.key } }"
-      >
+      <router-link v-for="space in spaces" :key="space.address" :to="{ name: 'proposals', params: { key: space.key } }">
         <Block class="text-center extra-icon-container">
           <Token
             :space="space.key"
@@ -34,7 +30,6 @@
 <script>
 import { mapActions } from 'vuex';
 import orderBy from 'lodash/orderBy';
-import homepage from '@bonustrack/snapshot-spaces/spaces/homepage.json';
 
 export default {
   data() {
@@ -44,10 +39,7 @@ export default {
   },
   computed: {
     spaces() {
-      const spaces =
-        this.web3.network.chainId === 1
-          ? homepage
-          : Object.keys(this.web3.spaces);
+      const spaces = Object.keys(this.web3.spaces);
       const list = spaces.map(key => ({
         ...this.web3.spaces[key],
         favorite: !!this.favoriteSpaces.favorites[key]
