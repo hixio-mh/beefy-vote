@@ -6,12 +6,14 @@ requireSkin.keys().map(file => requireSkin(file));
 const spaces = Object.fromEntries(
   requireSpace
     .keys()
-    .filter(file => !['./domains.json', './homepage.json', './example/index.json'].includes(file))
+    .filter(file => !['./homepage.json', './example/index.json'].includes(file))
     .map(file => {
       const space = requireSpace(file);
       return [space.key, space];
     })
 );
+
+console.log(spaces);
 
 const spacesByChainId = {};
 Object.entries(spaces).forEach((space: any) => {
