@@ -36,7 +36,7 @@ export default {
     _ipfsUrl(ipfsHash: string): string {
       return `https://${process.env.VUE_APP_IPFS_NODE}/ipfs/${ipfsHash}`;
     },
-    _bsccanLink(str: string, type: string): string {
+    _bscscanLink(str: string, type: string): string {
       return bscscanLink(str, type);
     },
   },
