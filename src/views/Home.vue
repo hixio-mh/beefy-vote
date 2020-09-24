@@ -27,16 +27,6 @@
           </div>
         </Block>
       </router-link>
-      <a href="https://discord.snapshot.page" target="_blank">
-        <Block class="text-center">
-          <div
-            v-text="'+'"
-            style="width: 88px; height: 88px; color: white; font-size: 76px; padding-top: 2px;"
-            class="bg-gray-3 circle mx-auto mb-3"
-          />
-          <h2 v-text="'Create space'" />
-        </Block>
-      </a>
     </Container>
   </div>
 </template>
@@ -45,7 +35,6 @@
 import { mapActions } from 'vuex';
 import orderBy from 'lodash/orderBy';
 import homepage from '@bonustrack/snapshot-spaces/spaces/homepage.json';
-import domains from '@bonustrack/snapshot-spaces/spaces/domains.json';
 
 export default {
   data() {
@@ -81,14 +70,6 @@ export default {
     }
   },
   created() {
-    const domainName = window.location.hostname;
-    if (domains[domainName])
-      return this.$router.push({
-        name: 'proposals',
-        params: {
-          key: domains[domainName]
-        }
-      });
     this.loadFavoriteSpaces();
   }
 };
