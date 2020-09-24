@@ -119,6 +119,8 @@ const actions = {
     commit('LOGOUT');
   },
   loadProvider: async ({ commit, dispatch }) => {
+    console.log('>>>>>> LOADING PROVIDER async');
+
     commit('LOAD_PROVIDER_REQUEST');
     try {
       if (auth.provider.removeAllListeners) auth.provider.removeAllListeners();
@@ -155,6 +157,7 @@ const actions = {
     }
   },
   lookupAddress: async ({ commit }, address) => {
+    console.log('>>>> LOOKUP ADDRESS');
     // TODO: check if this hardcoded validation is required
     // if (state.network.chainId !== 1) return;
 
@@ -167,6 +170,7 @@ const actions = {
     }
   },
   resolveName: async ({ commit }, name) => {
+    console.log('>>>> RESOLVE NAME');
     // TODO: check if this hardcoded validation is required
     // if (state.network.chainId !== 1) return;
 
