@@ -12,7 +12,7 @@
         >
           <UiButton class="button-outline width-full v-align-middle">
             <img
-              :src="`/connectors/${connector.id}.png`"
+              :src="require(`@/assets/connectors/${connector.id}.png`)"
               height="28"
               width="28"
               class="mr-1 v-align-middle"
