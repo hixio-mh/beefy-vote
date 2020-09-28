@@ -89,6 +89,8 @@ const actions = {
     commit('GET_PROPOSALS_REQUEST');
     try {
       let proposals: any = await client.request(`${space.address}/proposals`);
+      // TODO: debug this!
+      
       if (proposals) {
         let balances = await multicall(
           rootState.web3.network.chainId,

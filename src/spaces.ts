@@ -10,8 +10,6 @@ const spaces = Object.fromEntries(
   })
 );
 
-console.log(spaces);
-
 const spacesByChainId = {};
 Object.entries(spaces).forEach((space: any) => {
   if (!spacesByChainId[space[1].chainId]) spacesByChainId[space[1].chainId] = {};

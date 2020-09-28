@@ -7,9 +7,7 @@
   "defaultView": "core",
   "address": "0x38fdC621feA9c96F7442289CA4C11012fFDDD193",
   "token": "0x38fdC621feA9c96F7442289CA4C11012fFDDD193",
-  "core": [
-    "0x0000000000000000000000000000000000000000"
-  ],
+  "core": [],
   "min": 0,
   "invalid": []
 }
