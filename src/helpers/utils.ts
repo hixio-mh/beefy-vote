@@ -68,3 +68,7 @@ export function formatProposals(proposals) {
     ])
   );
 }
+
+export function isEmpty(o) {
+  return Object.entries(o).length === 0;
+}

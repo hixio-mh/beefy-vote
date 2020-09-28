@@ -2,7 +2,7 @@ import { getScores } from '@bonustrack/snapshot.js/src/utils';
 import client from '@/helpers/client';
 import ipfs from '@/helpers/ipfs';
 import rpcProvider from '@/helpers/rpc';
-import { formatProposal, formatProposals } from '@/helpers/utils';
+import { formatProposal, formatProposals, isEmpty } from '@/helpers/utils';
 import { version } from '@/../package.json';
 
 const mutations = {
@@ -78,7 +78,8 @@ const actions = {
     commit('GET_PROPOSALS_REQUEST');
     try {
       let proposals: any = await client.request(`${space.address}/proposals`);
-      if (proposals) {
+      console.debug(`>>> proposals`, proposals);
+      if (proposals && !isEmpty(proposals)) {
         const defaultStrategies = [
           [
             'erc20-balance-of',
