@@ -25,16 +25,16 @@ export default {
   data() {
     return {
       now: Date.now(),
-      duration: DURATION
+      duration: DURATION,
     };
   },
   computed: {
     items() {
       return this.$store.state.notifications.items;
-    }
+    },
   },
   mounted() {
     setInterval(() => (this.now = Date.now()), 1000);
-  }
+  },
 };
 </script>

@@ -43,8 +43,8 @@ export default {
       step: 0,
       form: {
         h: '12',
-        m: '00'
-      }
+        m: '00',
+      },
     };
   },
   watch: {
@@ -52,7 +52,7 @@ export default {
       this.step = 0;
       this.form = { h: '12', m: '00' };
       this.input = this.value;
-    }
+    },
   },
   methods: {
     handleSubmit() {
@@ -62,7 +62,7 @@ export default {
       input = new Date(input).getTime() / (1e3).toFixed();
       this.$emit('input', input);
       this.$emit('close');
-    }
-  }
+    },
+  },
 };
 </script>

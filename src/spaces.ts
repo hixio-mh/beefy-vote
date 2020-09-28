@@ -12,7 +12,8 @@ const spaces = Object.fromEntries(
 
 const spacesByChainId = {};
 Object.entries(spaces).forEach((space: any) => {
-  if (!spacesByChainId[space[1].chainId]) spacesByChainId[space[1].chainId] = {};
+  if (!spacesByChainId[space[1].chainId])
+    spacesByChainId[space[1].chainId] = {};
   spacesByChainId[space[1].chainId][space[0]] = space[1];
 });
 

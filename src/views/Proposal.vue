@@ -169,7 +169,7 @@ export default {
       modalOpen: false,
       selectedChoice: 0,
       totalScore: 0,
-      scores: []
+      scores: [],
     };
   },
   computed: {
@@ -185,19 +185,19 @@ export default {
     symbols() {
       if (!this.space.strategies) return [this.space.symbol];
       return this.space.strategies.map(strategy => strategy[1].symbol);
-    }
+    },
   },
   watch: {
     'web3.account': async function(val, prev) {
       if (val && val.toLowerCase() !== prev) await this.loadPower();
-    }
+    },
   },
   methods: {
     ...mapActions(['getProposal', 'getPower']),
     async loadProposal() {
       const proposalObj = await this.getProposal({
         space: this.space,
-        id: this.id
+        id: this.id,
       });
       this.proposal = proposalObj.proposal;
       this.votes = proposalObj.votes;
@@ -208,11 +208,11 @@ export default {
       const { scores, totalScore } = await this.getPower({
         space: this.space,
         address: this.web3.account,
-        snapshot: this.payload.snapshot
+        snapshot: this.payload.snapshot,
       });
       this.totalScore = totalScore;
       this.scores = scores;
-    }
+    },
   },
   async created() {
     this.loading = true;
@@ -220,6 +220,6 @@ export default {
     await this.loadPower();
     this.loading = false;
     this.loaded = true;
-  }
+  },
 };
 </script>

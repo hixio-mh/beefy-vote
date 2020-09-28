@@ -83,7 +83,7 @@ export default {
     return {
       loading: false,
       modalOpen: false,
-      modalAboutOpen: false
+      modalAboutOpen: false,
     };
   },
   computed: {
@@ -103,7 +103,7 @@ export default {
       } catch (e) {
         return {};
       }
-    }
+    },
   },
   methods: {
     ...mapActions(['login']),
@@ -112,7 +112,7 @@ export default {
       this.loading = true;
       await this.login(connector);
       this.loading = false;
-    }
-  }
+    },
+  },
 };
 </script>

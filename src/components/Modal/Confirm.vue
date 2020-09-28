@@ -65,18 +65,18 @@ export default {
     'selectedChoice',
     'snapshot',
     'totalScore',
-    'scores'
+    'scores',
   ],
   data() {
     return {
-      loading: false
+      loading: false,
     };
   },
   computed: {
     symbols() {
       if (!this.space.strategies) return [this.space.symbol];
       return this.space.strategies.map(strategy => strategy[1].symbol);
-    }
+    },
   },
   methods: {
     ...mapActions(['send']),
@@ -88,13 +88,13 @@ export default {
         payload: {
           proposal: this.id,
           choice: this.selectedChoice,
-          metadata: {}
-        }
+          metadata: {},
+        },
       });
       this.$emit('reload');
       this.$emit('close');
       this.loading = false;
-    }
-  }
+    },
+  },
 };
 </script>

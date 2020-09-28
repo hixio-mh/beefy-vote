@@ -16,7 +16,7 @@ export default {
   props: {
     token: String,
     proposal: Object,
-    i: Number
-  }
+    i: Number,
+  },
 };
 </script>

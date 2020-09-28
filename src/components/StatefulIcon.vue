@@ -4,7 +4,7 @@
       'extra-icon': true,
       'extra-icon-off': !this.on,
       'text-primary': this.on,
-      'text-gray': !this.on
+      'text-gray': !this.on,
     }"
     @click="handleClick($event)"
   >
@@ -17,20 +17,20 @@ export default {
   props: {
     onName: { type: String },
     offName: { type: String },
-    on: { type: Boolean, default: true }
+    on: { type: Boolean, default: true },
   },
   computed: {
     name() {
       return this.on ? 'favorite-on' : 'favorite-off';
-    }
+    },
   },
   methods: {
     handleClick(e) {
       e.preventDefault();
 
       this.$emit('click');
-    }
-  }
+    },
+  },
 };
 </script>
 

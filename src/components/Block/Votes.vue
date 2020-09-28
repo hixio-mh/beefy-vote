@@ -61,7 +61,7 @@ export default {
       showAllVotes: false,
       authorIpfsHash: '',
       relayerIpfsHash: '',
-      modalReceiptOpen: false
+      modalReceiptOpen: false,
     };
   },
   computed: {
@@ -73,14 +73,14 @@ export default {
     titles() {
       if (!this.space.strategies) return [this.space.symbol];
       return this.space.strategies.map(strategy => strategy[1].symbol);
-    }
+    },
   },
   methods: {
     openReceiptModal(vote) {
       this.authorIpfsHash = vote.authorIpfsHash;
       this.relayerIpfsHash = vote.relayerIpfsHash;
       this.modalReceiptOpen = true;
-    }
-  }
+    },
+  },
 };
 </script>

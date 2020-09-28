@@ -59,7 +59,7 @@ export default {
     titles() {
       if (!this.space.strategies) return [this.space.symbol];
       return this.space.strategies.map(strategy => strategy[1].symbol);
-    }
+    },
   },
   methods: {
     async downloadReport() {
@@ -74,7 +74,7 @@ export default {
               parseInt(vote[1].msg.timestamp) * 1e3
             ).toUTCString(),
             authorIpfsHash: vote[1].authorIpfsHash,
-            relayerIpfsHash: vote[1].relayerIpfsHash
+            relayerIpfsHash: vote[1].relayerIpfsHash,
           };
         })
         .sort((a, b) => a.timestamp - b.timestamp, 0);
@@ -88,7 +88,7 @@ export default {
       } catch (e) {
         console.error(e);
       }
-    }
-  }
+    },
+  },
 };
 </script>

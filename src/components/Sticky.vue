@@ -18,7 +18,7 @@ export default {
     return {
       isFixed: false,
       offsetTop: -1,
-      offsetHeight: 0
+      offsetHeight: 0,
     };
   },
   mounted() {
@@ -37,7 +37,7 @@ export default {
       if (this.isSticky === false) return;
       const windowTop = e.target.documentElement.scrollTop;
       this.isFixed = windowTop >= this.offsetTop;
-    }
-  }
+    },
+  },
 };
 </script>

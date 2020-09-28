@@ -113,7 +113,7 @@ import draggable from 'vuedraggable';
 
 export default {
   components: {
-    draggable
+    draggable,
   },
   data() {
     return {
@@ -127,11 +127,11 @@ export default {
         start: '',
         end: '',
         snapshot: '',
-        metadata: {}
+        metadata: {},
       },
       modalOpen: false,
       selectedDate: '',
-      counter: 0
+      counter: 0,
     };
   },
   computed: {
@@ -152,7 +152,7 @@ export default {
         this.choices.length >= 2 &&
         !this.choices.some(a => a.text === '')
       );
-    }
+    },
   },
   mounted() {
     this.addChoice(2);
@@ -180,21 +180,21 @@ export default {
         const { ipfsHash } = await this.send({
           token: this.space.address,
           type: 'proposal',
-          payload: this.form
+          payload: this.form,
         });
         this.$router.push({
           name: 'proposal',
           params: {
             key: this.key,
-            id: ipfsHash
-          }
+            id: ipfsHash,
+          },
         });
       } catch (e) {
         console.error(e);
         this.loading = false;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

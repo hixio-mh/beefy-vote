@@ -5,13 +5,13 @@ import { lsGet, lsSet } from '@/helpers/utils';
 const FAVORITES_KEY = 'FAVORITE_SPACES';
 
 const state = {
-  favorites: {}
+  favorites: {},
 };
 
 const mutations = {
   setFavorites(_state, favorites: Record<string, boolean>) {
     Vue.set(_state, 'favorites', favorites);
-  }
+  },
 };
 
 const actions = {
@@ -31,11 +31,11 @@ const actions = {
 
     lsSet(FAVORITES_KEY, favorites);
     commit('setFavorites', favorites);
-  }
+  },
 };
 
 export default {
   state,
   mutations,
-  actions
+  actions,
 };

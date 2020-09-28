@@ -4,41 +4,27 @@ import { Web3Provider } from '@ethersproject/providers';
 import { Contract } from '@ethersproject/contracts';
 import { getAddress } from '@ethersproject/address';
 import spaces from '@/spaces';
-import store from '@/store';
 import abi from '@/helpers/abi';
 import config from '@/helpers/config';
-import wsProvider from '@/helpers/ws';
 import rpcProvider from '@/helpers/rpc';
+import { formatUnits } from '@ethersproject/units';
 
 let auth;
 let web3;
-const chainId = process.env.VUE_APP_CHAIN_ID || '1';
-
-if (wsProvider) {
-  wsProvider.on('block', blockNumber => {
-    store.commit('GET_BLOCK_SUCCESS', blockNumber);
-  });
-}
 
 const state = {
-  injectedLoaded: false,
-  injectedChainId: null,
   account: null,
   name: null,
-  active: false,
   balances: {},
   blockNumber: 0,
-  spaces: spaces[chainId],
-  network: config.networks[chainId],
+  spaces: {},
+  network: config.networks['56'],
 };
 
 const mutations = {
   LOGOUT(_state) {
-    Vue.set(_state, 'injectedLoaded', false);
-    Vue.set(_state, 'injectedChainId', null);
     Vue.set(_state, 'account', null);
     Vue.set(_state, 'name', null);
-    Vue.set(_state, 'active', false);
     Vue.set(_state, 'balances', {});
     console.debug('LOGOUT');
   },
@@ -46,21 +32,19 @@ const mutations = {
     console.debug('LOAD_PROVIDER_REQUEST');
   },
   LOAD_PROVIDER_SUCCESS(_state, payload) {
-    Vue.set(_state, 'injectedLoaded', payload.injectedLoaded);
-    Vue.set(_state, 'injectedChainId', payload.injectedChainId);
     Vue.set(_state, 'account', payload.account);
     Vue.set(_state, 'name', payload.name);
     console.debug('LOAD_PROVIDER_SUCCESS');
   },
   LOAD_PROVIDER_FAILURE(_state, payload) {
-    Vue.set(_state, 'injectedLoaded', false);
-    Vue.set(_state, 'injectedChainId', null);
     Vue.set(_state, 'account', null);
-    Vue.set(_state, 'active', false);
     console.debug('LOAD_PROVIDER_FAILURE', payload);
   },
-  HANDLE_CHAIN_CHANGED() {
-    console.debug('HANDLE_CHAIN_CHANGED');
+  HANDLE_CHAIN_CHANGED(_state, chainId) {
+    // FIXME: noop
+    Vue.set(_state, 'network', config.networks[chainId]);
+    Vue.set(_state, 'spaces', spaces[chainId]);
+    console.debug('HANDLE_CHAIN_CHANGED', chainId);
   },
   HANDLE_ACCOUNTS_CHANGED(_state, payload) {
     Vue.set(_state, 'account', payload);
@@ -106,12 +90,14 @@ const mutations = {
 };
 
 const actions = {
-  login: async ({ dispatch }, connector = 'injected') => {
+  login: async ({ commit, dispatch }, connector = 'injected') => {
     auth = getInstance();
     await auth.login(connector);
     if (auth.provider) {
       web3 = new Web3Provider(auth.provider);
       await dispatch('loadProvider');
+    } else {
+      commit('HANDLE_CHAIN_CHANGED', 1);
     }
   },
   logout: async ({ commit }) => {
@@ -119,35 +105,31 @@ const actions = {
     commit('LOGOUT');
   },
   loadProvider: async ({ commit, dispatch }) => {
-    console.log('>>>>>> LOADING PROVIDER async');
-
     commit('LOAD_PROVIDER_REQUEST');
     try {
       if (auth.provider.removeAllListeners) auth.provider.removeAllListeners();
       if (auth.provider.on) {
         auth.provider.on('chainChanged', async chainId => {
-          commit('HANDLE_CHAIN_CHANGED', chainId);
-          if (state.active) await dispatch('loadProvider');
+          commit('HANDLE_CHAIN_CHANGED', parseInt(formatUnits(chainId, 0)));
         });
         auth.provider.on('accountsChanged', async accounts => {
-          if (accounts.length === 0) {
-            if (state.active) await dispatch('loadProvider');
-          } else {
+          if (accounts.length !== 0) {
             commit('HANDLE_ACCOUNTS_CHANGED', accounts[0]);
             await dispatch('loadProvider');
           }
         });
         auth.provider.on('disconnect', async () => {
           commit('HANDLE_CLOSE');
-          if (state.active) await dispatch('loadProvider');
         });
       }
-      const [network, accounts] = await Promise.all([web3.getNetwork(), web3.listAccounts()]);
+      const [network, accounts] = await Promise.all([
+        web3.getNetwork(),
+        web3.listAccounts(),
+      ]);
+      commit('HANDLE_CHAIN_CHANGED', network.chainId);
       const account = accounts.length > 0 ? accounts[0] : null;
       const name = await dispatch('lookupAddress', account);
       commit('LOAD_PROVIDER_SUCCESS', {
-        injectedLoaded: true,
-        injectedChainId: network.chainId,
         account,
         name,
       });
@@ -165,7 +147,6 @@ const actions = {
       commit('LOOKUP_ADDRESS_SUCCESS', name);
       return name;
     } catch (e) {
-      console.log(e)
       return Promise.reject();
     }
   },
@@ -181,14 +162,22 @@ const actions = {
       return Promise.reject();
     }
   },
-  sendTransaction: async ({ commit }, [contractType, contractAddress, action, params]) => {
+  sendTransaction: async (
+    { commit },
+    [contractType, contractAddress, action, params]
+  ) => {
     commit('SEND_TRANSACTION_REQUEST');
     try {
       const signer = web3.getSigner();
-      const contract = new Contract(getAddress(contractAddress), abi[contractType], web3);
+      const contract = new Contract(
+        getAddress(contractAddress),
+        abi[contractType],
+        web3
+      );
       const contractWithSigner = contract.connect(signer);
-
-      const tx = await contractWithSigner[action](...params);
+      const overrides = {};
+      // overrides.gasLimit = 12e6;
+      const tx = await contractWithSigner[action](...params, overrides);
       await tx.wait();
       commit('SEND_TRANSACTION_SUCCESS');
       return tx;
@@ -212,6 +201,7 @@ const actions = {
   getBlockNumber: async ({ commit }) => {
     commit('GET_BLOCK_REQUEST');
     try {
+      // @ts-ignore
       const blockNumber: any = await rpcProvider.getBlockNumber();
       commit('GET_BLOCK_SUCCESS', parseInt(blockNumber));
       return blockNumber;

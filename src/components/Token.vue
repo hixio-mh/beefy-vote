@@ -4,7 +4,7 @@
     class="d-inline-block v-align-middle line-height-0"
     :style="{
       width: `${size || 22}px`,
-      height: `${size || 22}px`
+      height: `${size || 22}px`,
     }"
   />
 </template>
@@ -15,7 +15,7 @@ export default {
   computed: {
     url() {
       return require(`@/spaces/${this.space}/logo.png`);
-    }
-  }
+    },
+  },
 };
 </script>

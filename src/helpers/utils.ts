@@ -64,7 +64,7 @@ export function formatProposals(proposals) {
   return Object.fromEntries(
     Object.entries(proposals).map(proposal => [
       proposal[0],
-      formatProposal(proposal[1])
+      formatProposal(proposal[1]),
     ])
   );
 }

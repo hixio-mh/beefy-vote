@@ -18,7 +18,7 @@ export default {
   props: ['address', 'space'],
   data() {
     return {
-      modalOpen: false
+      modalOpen: false,
     };
   },
   computed: {
@@ -27,7 +27,7 @@ export default {
         this.address.toLowerCase() === this.web3.account.toLowerCase()
         ? 'You'
         : this._shorten(this.address);
-    }
-  }
+    },
+  },
 };
 </script>

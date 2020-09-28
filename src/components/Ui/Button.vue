@@ -14,8 +14,8 @@
 export default {
   props: {
     loading: Boolean,
-    type: String
-  }
+    type: String,
+  },
 };
 </script>
 

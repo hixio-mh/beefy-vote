@@ -34,7 +34,7 @@ export default {
     token: String,
     proposal: Object,
     verified: Array,
-    i: String
+    i: String,
   },
   computed: {
     isVerified() {
@@ -43,7 +43,7 @@ export default {
         this.verified.length > 0 &&
         this.verified.includes(this.proposal.address)
       );
-    }
-  }
+    },
+  },
 };
 </script>

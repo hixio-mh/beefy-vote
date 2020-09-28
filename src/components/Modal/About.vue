@@ -30,7 +30,11 @@
       </div>
       <div class="d-flex">
         <span v-text="'Block number'" class="flex-auto text-gray mr-1" />
-        <a :href="_bscscanLink(web3.blockNumber, 'block')" target="_blank" class="float-right">
+        <a
+          :href="_bscscanLink(web3.blockNumber, 'block')"
+          target="_blank"
+          class="float-right"
+        >
           {{ $n(web3.blockNumber) }}
           <Icon name="external-link" class="ml-1" />
         </a>

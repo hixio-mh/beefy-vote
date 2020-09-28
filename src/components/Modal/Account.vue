@@ -61,20 +61,20 @@ export default {
   props: ['open'],
   data() {
     return {
-      step: null
+      step: null,
     };
   },
   watch: {
     open() {
       this.step = null;
-    }
+    },
   },
   methods: {
     ...mapActions(['logout']),
     async handleLogout() {
       await this.logout();
       this.$emit('close');
-    }
-  }
+    },
+  },
 };
 </script>

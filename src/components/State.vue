@@ -10,7 +10,7 @@
 <script>
 export default {
   props: {
-    proposal: Object
+    proposal: Object,
   },
   computed: {
     state() {
@@ -19,7 +19,7 @@ export default {
       if (ts > end) return { name: 'Closed', class: 'bg-purple' };
       if (ts > start) return { name: 'Active', class: 'bg-green' };
       return { name: 'Pending' };
-    }
-  }
+    },
+  },
 };
 </script>

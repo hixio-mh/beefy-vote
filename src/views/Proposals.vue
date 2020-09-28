@@ -62,7 +62,7 @@ export default {
       loading: false,
       loaded: false,
       proposals: {},
-      selectedState: 'all'
+      selectedState: 'all',
     };
   },
   computed: {
@@ -79,7 +79,7 @@ export default {
         'community',
         'active',
         'pending',
-        'closed'
+        'closed',
       ];
       return this.space.showOnlyCore
         ? states.filter(state => !['core', 'community'].includes(state))
@@ -147,10 +147,10 @@ export default {
           })
           .sort((a, b) => b[1].msg.payload.end - a[1].msg.payload.end, 0)
       );
-    }
+    },
   },
   methods: {
-    ...mapActions(['getProposals'])
+    ...mapActions(['getProposals']),
   },
   async created() {
     this.loading = true;
@@ -158,6 +158,6 @@ export default {
     this.proposals = await this.getProposals(this.space);
     this.loading = false;
     this.loaded = true;
-  }
+  },
 };
 </script>

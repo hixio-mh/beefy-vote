@@ -19,8 +19,8 @@ export default {
     },
     total() {
       return this.bars.reduce((a, b) => a + b, 0);
-    }
-  }
+    },
+  },
 };
 </script>
 

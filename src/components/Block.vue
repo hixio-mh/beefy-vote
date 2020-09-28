@@ -17,6 +17,6 @@
 
 <script>
 export default {
-  props: ['title', 'counter', 'slim']
+  props: ['title', 'counter', 'slim'],
 };
 </script>

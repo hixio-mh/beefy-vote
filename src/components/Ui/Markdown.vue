@@ -9,7 +9,7 @@ import { linkify } from 'remarkable/linkify';
 const remarkable = new Remarkable({
   html: false,
   breaks: true,
-  typographer: false
+  typographer: false,
 }).use(linkify);
 
 export default {
@@ -20,8 +20,8 @@ export default {
       body = remarkable.render(body);
       // body = sanitizeHtml(body);
       return body;
-    }
-  }
+    },
+  },
 };
 </script>
 

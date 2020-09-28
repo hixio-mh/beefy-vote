@@ -1,10 +1,24 @@
 <template>
   <div>
     <Container :slim="true">
-      <router-link v-for="space in spaces" :key="space.address" :to="{ name: 'proposals', params: { key: space.key } }">
+      <router-link
+        v-for="space in spaces"
+        :key="space.address"
+        :to="{ name: 'proposals', params: { key: space.key } }"
+      >
         <Block class="text-center extra-icon-container">
-          <Token :space="space.key" symbolIndex="space" size="88" class="mb-3" />
-          <StatefulIcon :on="space.favorite" onName="star" offName="star1" @click="toggleFavorite(space.key)" />
+          <Token
+            :space="space.key"
+            symbolIndex="space"
+            size="88"
+            class="mb-3"
+          />
+          <StatefulIcon
+            :on="space.favorite"
+            onName="star"
+            offName="star1"
+            @click="toggleFavorite(space.key)"
+          />
           <div>
             <h2>
               {{ space.name }}
@@ -33,7 +47,11 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['loadFavoriteSpaces', 'addFavoriteSpace', 'removeFavoriteSpace']),
+    ...mapActions([
+      'loadFavoriteSpaces',
+      'addFavoriteSpace',
+      'removeFavoriteSpace',
+    ]),
     toggleFavorite(spaceId) {
       if (this.favoriteSpaces.favorites[spaceId]) {
         this.removeFavoriteSpace(spaceId);

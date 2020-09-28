@@ -28,7 +28,7 @@
           class="day border-bottom border-right selectable"
           :class="{
             'bg-gray-dark': formatDate(year, month, day) === today,
-            selected: input.includes(formatDate(year, month, day))
+            selected: input.includes(formatDate(year, month, day)),
           }"
           v-if="isSelectable(year, month, day)"
           v-text="day"
@@ -48,7 +48,7 @@ export default {
       input: '',
       month: new Date().getMonth(),
       year: new Date().getFullYear(),
-      day: new Date().getDate()
+      day: new Date().getDate(),
     };
   },
   computed: {
@@ -64,7 +64,7 @@ export default {
       return [...Array(7)].map(() => {
         sunday.setDate(sunday.getDate() + 1);
         return sunday.toLocaleDateString(this.$i18n.locale, {
-          weekday: 'short'
+          weekday: 'short',
         });
       });
     },
@@ -72,7 +72,7 @@ export default {
       const name = new Date(this.year, this.month).toLocaleString(
         this.$i18n.locale,
         {
-          month: 'long'
+          month: 'long',
         }
       );
       return `${name.charAt(0).toUpperCase()}${name.slice(1)}`;
@@ -82,7 +82,7 @@ export default {
     },
     emptyDays() {
       return new Date(this.year, this.month, 1).getDay();
-    }
+    },
   },
   methods: {
     formatDate(year, month, day) {
@@ -102,8 +102,8 @@ export default {
         new Date(year, month, day) < in30Days
       );
       */
-    }
-  }
+    },
+  },
 };
 </script>
 

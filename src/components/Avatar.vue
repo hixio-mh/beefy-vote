@@ -8,6 +8,6 @@
 
 <script>
 export default {
-  props: ['address', 'size']
+  props: ['address', 'size'],
 };
 </script>

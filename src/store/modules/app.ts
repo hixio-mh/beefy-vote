@@ -1,9 +1,6 @@
-import { formatUnits } from '@ethersproject/units';
-import { multicall } from '@bonustrack/snapshot.js/src/utils';
-import strategies from '@bonustrack/snapshot.js/src/strategies';
+import { getScores } from '@bonustrack/snapshot.js/src/utils';
 import client from '@/helpers/client';
 import ipfs from '@/helpers/ipfs';
-import abi from '@/helpers/abi';
 import rpcProvider from '@/helpers/rpc';
 import { formatProposal, formatProposals } from '@/helpers/utils';
 import { version } from '@/../package.json';
@@ -36,15 +33,6 @@ const mutations = {
   GET_PROPOSAL_FAILURE(_state, payload) {
     console.debug('GET_PROPOSAL_FAILURE', payload);
   },
-  GET_VOTERS_BALANCES_REQUEST() {
-    console.debug('GET_VOTERS_BALANCES_REQUEST');
-  },
-  GET_VOTERS_BALANCES_SUCCESS() {
-    console.debug('GET_VOTERS_BALANCES_SUCCESS');
-  },
-  GET_VOTERS_BALANCES_FAILURE(_state, payload) {
-    console.debug('GET_VOTERS_BALANCES_FAILURE', payload);
-  },
   GET_POWER_REQUEST() {
     console.debug('GET_POWER_REQUEST');
   },
@@ -53,7 +41,7 @@ const mutations = {
   },
   GET_POWER_FAILURE(_state, payload) {
     console.debug('GET_POWER_FAILURE', payload);
-  }
+  },
 };
 
 const actions = {
@@ -67,8 +55,8 @@ const actions = {
           timestamp: (Date.now() / 1e3).toFixed(),
           token,
           type,
-          payload
-        })
+          payload,
+        }),
       };
       msg.sig = await dispatch('signMessage', msg.msg);
       const result = await client.request('message', msg);
@@ -81,6 +69,7 @@ const actions = {
         e && e.error_description
           ? `Oops, ${e.error_description}`
           : 'Oops, something went wrong!';
+
       dispatch('notify', ['red', errorMessage]);
       return;
     }
@@ -89,25 +78,25 @@ const actions = {
     commit('GET_PROPOSALS_REQUEST');
     try {
       let proposals: any = await client.request(`${space.address}/proposals`);
-      // TODO: debug this!
-      
       if (proposals) {
-        let balances = await multicall(
+        const defaultStrategies = [
+          [
+            'erc20-balance-of',
+            { address: space.address, decimals: space.decimals },
+          ],
+        ];
+        const scores: any = await getScores(
+          space.strategies || defaultStrategies,
           rootState.web3.network.chainId,
           rpcProvider,
-          abi['TestToken'],
-          Object.values(proposals).map((proposal: any) => [
-            proposal.msg.token,
-            'balanceOf',
-            [proposal.address]
-          ])
-        );
-        balances = balances.map(balance =>
-          parseFloat(formatUnits(balance.toString(), space.decimals))
+          Object.values(proposals).map((proposal: any) => proposal.address)
         );
         proposals = Object.fromEntries(
-          Object.entries(proposals).map((proposal: any, i) => {
-            proposal[1].balance = balances[i];
+          Object.entries(proposals).map((proposal: any) => {
+            proposal[1].score = scores.reduce(
+              (a, b) => a + b[proposal[1].address],
+              0
+            );
             return [proposal[0], proposal[1]];
           })
         );
@@ -124,7 +113,7 @@ const actions = {
       const result: any = {};
       const [proposal, votes] = await Promise.all([
         ipfs.get(payload.id),
-        client.request(`${payload.space.address}/proposal/${payload.id}`)
+        client.request(`${payload.space.address}/proposal/${payload.id}`),
       ]);
       result.proposal = formatProposal(proposal);
       result.proposal.ipfsHash = payload.id;
@@ -135,20 +124,17 @@ const actions = {
       const defaultStrategies = [
         [
           'erc20-balance-of',
-          { address: payload.space.address, decimals: payload.space.decimals }
-        ]
+          { address: payload.space.address, decimals: payload.space.decimals },
+        ],
       ];
       const spaceStrategies = payload.space.strategies || defaultStrategies;
-      const scores: any = await Promise.all(
-        spaceStrategies.map((strategy: any) =>
-          strategies[strategy[0]](
-            rootState.web3.network.chainId,
-            rpcProvider,
-            Object.keys(result.votes),
-            strategy[1],
-            blockTag
-          )
-        )
+      const scores: any = await getScores(
+        spaceStrategies,
+        rootState.web3.network.chainId,
+        rpcProvider,
+        Object.keys(result.votes),
+        // @ts-ignore
+        blockTag
       );
       console.log('Scores', scores);
       result.votes = Object.fromEntries(
@@ -185,7 +171,7 @@ const actions = {
         totalVotesBalances: Object.values(result.votes).reduce(
           (a, b: any) => a + b.balance,
           0
-        )
+        ),
       };
       commit('GET_PROPOSAL_SUCCESS');
       return result;
@@ -201,37 +187,32 @@ const actions = {
       const defaultStrategies = [
         [
           'erc20-balance-of',
-          { address: space.address, decimals: space.decimals }
-        ]
+          { address: space.address, decimals: space.decimals },
+        ],
       ];
-      const spaceStrategies = space.strategies || defaultStrategies;
-      const scores: any = (
-        await Promise.all(
-          spaceStrategies.map((strategy: any) =>
-            strategies[strategy[0]](
-              rootState.web3.network.chainId,
-              rpcProvider,
-              [address],
-              strategy[1],
-              blockTag
-            )
-          )
-        )
-      ).map((score: any) =>
+      let scores: any = await getScores(
+        space.strategies || defaultStrategies,
+        rootState.web3.network.chainId,
+        rpcProvider,
+        [address],
+        // @ts-ignore
+        blockTag
+      );
+      scores = scores.map((score: any) =>
         Object.values(score).reduce((a, b: any) => a + b, 0)
       );
       commit('GET_POWER_SUCCESS');
       return {
         scores,
-        totalScore: scores.reduce((a, b: any) => a + b, 0)
+        totalScore: scores.reduce((a, b: any) => a + b, 0),
       };
     } catch (e) {
       commit('GET_POWER_FAILURE', e);
     }
-  }
+  },
 };
 
 export default {
   mutations,
-  actions
+  actions,
 };

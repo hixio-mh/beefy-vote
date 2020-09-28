@@ -17,6 +17,6 @@
 
 <script>
 export default {
-  props: ['open', 'address']
+  props: ['open', 'address'],
 };
 </script>
