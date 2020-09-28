@@ -34,7 +34,7 @@
             </router-link>
           </div>
           <div :key="web3.account">
-            <template v-if="$auth.isAuthenticated && !wrongNetwork">
+            <template v-if="$auth.isAuthenticated">
               <UiButton
                 @click="modalOpen = true"
                 class="button-outline"
@@ -50,13 +50,10 @@
               </UiButton>
             </template>
             <UiButton
-              v-else-if="web3.injectedLoaded && wrongNetwork"
-              class="text-red"
+              v-if="!$auth.isAuthenticated"
+              @click="modalOpen = true"
+              :loading="loading"
             >
-              <Icon name="warning" class="ml-n1 mr-1 v-align-middle" />
-              Wrong network
-            </UiButton>
-            <UiButton v-else @click="modalOpen = true" :loading="loading">
               Connect<span class="hide-sm" v-text="' wallet'" />
             </UiButton>
             <UiButton @click="modalAboutOpen = true" class="ml-2">
@@ -87,21 +84,11 @@ export default {
     };
   },
   computed: {
-    wrongNetwork() {
-      const chainId = process.env.VUE_APP_CHAIN_ID || 1;
-      return parseInt(chainId) !== this.web3.network.chainId;
-    },
-    showLogin() {
-      return (
-        (!this.$auth.isAuthenticated && !this.web3.injectedLoaded) ||
-        (!this.$auth.isAuthenticated && !this.wrongNetwork)
-      );
-    },
     space() {
       try {
         return this.web3.spaces[this.$route.params.key];
       } catch (e) {
-        return {};
+        return false;
       }
     },
   },

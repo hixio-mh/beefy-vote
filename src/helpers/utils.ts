@@ -54,9 +54,6 @@ export function formatProposal(proposal) {
     proposal.msg.payload.metadata = {};
   }
 
-  if (proposal.msg.payload.snapshot < 10000000)
-    proposal.msg.payload.snapshot = 20000000;
-
   return proposal;
 }
 
