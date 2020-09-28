@@ -2,6 +2,9 @@ class Client {
   request(command, body?) {
     const url = `${process.env.VUE_APP_HUB_URL}/api/${command}`;
     let init;
+
+    console.debug(`>>> Client.request`, url, command, body);
+
     if (body) {
       init = {
         method: 'POST',

@@ -1,0 +1,13 @@
+{
+  "key": "gov",
+  "name": "Gov",
+  "chainId": 97,
+  "decimals": 18,
+  "symbol": "GOV",
+  "defaultView": "all",
+  "address": "0x38fdC621feA9c96F7442289CA4C11012fFDDD193",
+  "token": "0x38fdC621feA9c96F7442289CA4C11012fFDDD193",
+  "core": [],
+  "min": 0,
+  "invalid": []
+}
