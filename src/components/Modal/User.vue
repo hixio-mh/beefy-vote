@@ -7,7 +7,7 @@
     <div class="m-4">
       <a :href="_bscscanLink(address)" target="_blank" class="mb-2 d-block">
         <UiButton class="button-outline width-full">
-          See on Etherscan
+          See on Bscscan
           <Icon name="external-link" class="ml-1" />
         </UiButton>
       </a>
