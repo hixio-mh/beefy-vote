@@ -19,7 +19,7 @@
               <span
                 :class="space && 'hide-sm'"
                 class="mr-1"
-                v-text="'snapshot'"
+                v-text="'vote.beefy'"
               />
             </router-link>
             <router-link
