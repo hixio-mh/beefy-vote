@@ -1,4 +1,3 @@
-import { getScores } from '@bonustrack/snapshot.js/src/utils';
 import client from '@/helpers/client';
 import ipfs from '@/helpers/ipfs';
 import rpcProvider from '@/helpers/rpc';
@@ -86,12 +85,10 @@ const actions = {
             { address: space.address, decimals: space.decimals },
           ],
         ];
-        const scores: any = await getScores(
-          space.strategies || defaultStrategies,
-          rootState.web3.network.chainId,
-          rpcProvider,
-          Object.values(proposals).map((proposal: any) => proposal.address)
-        );
+
+        // TODO: implement BSC scores
+        const scores: any = [];
+   
         proposals = Object.fromEntries(
           Object.entries(proposals).map((proposal: any) => {
             proposal[1].score = scores.reduce(
@@ -129,15 +126,9 @@ const actions = {
         ],
       ];
       const spaceStrategies = payload.space.strategies || defaultStrategies;
-      const scores: any = await getScores(
-        spaceStrategies,
-        rootState.web3.network.chainId,
-        rpcProvider,
-        Object.keys(result.votes),
-        // @ts-ignore
-        blockTag
-      );
-      console.log('Scores', scores);
+      
+      // TODO: implement BSC scores
+      const scores: any = [];
       result.votes = Object.fromEntries(
         Object.entries(result.votes)
           .map((vote: any) => {
@@ -191,14 +182,8 @@ const actions = {
           { address: space.address, decimals: space.decimals },
         ],
       ];
-      let scores: any = await getScores(
-        space.strategies || defaultStrategies,
-        rootState.web3.network.chainId,
-        rpcProvider,
-        [address],
-        // @ts-ignore
-        blockTag
-      );
+      // TODO: implement BSC scores
+      let scores: any = [];
       scores = scores.map((score: any) =>
         Object.values(score).reduce((a, b: any) => a + b, 0)
       );
