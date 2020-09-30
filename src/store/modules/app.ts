@@ -77,7 +77,7 @@ const actions = {
     commit('GET_PROPOSALS_REQUEST');
     try {
       let proposals: any = await client.request(`${space.address}/proposals`);
-      console.debug(`>>> proposals`, proposals);
+      
       if (proposals && !isEmpty(proposals)) {
         const defaultStrategies = [
           [
@@ -93,8 +93,9 @@ const actions = {
           Object.entries(proposals).map((proposal: any) => {
             proposal[1].score = scores.reduce(
               (a, b) => a + b[proposal[1].address],
-              0
+              0 // FIXME: make this 0 once BSC scores have been implemented
             );
+            
             return [proposal[0], proposal[1]];
           })
         );
@@ -116,6 +117,9 @@ const actions = {
       result.proposal = formatProposal(proposal);
       result.proposal.ipfsHash = payload.id;
       result.votes = votes;
+
+      console.log('>>>>>>>>>', 'proposal details', result.proposal.msg.payload);
+      
       const { snapshot } = result.proposal.msg.payload;
       const blockTag =
         snapshot > rootState.web3.blockNumber ? 'latest' : parseInt(snapshot);
@@ -132,10 +136,8 @@ const actions = {
       result.votes = Object.fromEntries(
         Object.entries(result.votes)
           .map((vote: any) => {
-            vote[1].scores = spaceStrategies.map(
-              (strategy, i) => scores[i][vote[1].address] || 0
-            );
-            vote[1].balance = vote[1].scores.reduce((a, b: any) => a + b, 0);
+            vote[1].scores = 0; // FIXME: make this 0 once BSC scores have been implemented
+            vote[1].balance = 0; 
             return vote;
           })
           .sort((a, b) => b[1].balance - a[1].balance)
@@ -190,7 +192,7 @@ const actions = {
       commit('GET_POWER_SUCCESS');
       return {
         scores,
-        totalScore: scores.reduce((a, b: any) => a + b, 0),
+        totalScore: scores.reduce((a, b: any) => a + b, 0), // FIXME: make this 0 once BSC scores have been implemented
       };
     } catch (e) {
       commit('GET_POWER_FAILURE', e);

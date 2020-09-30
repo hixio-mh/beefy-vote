@@ -1,7 +1,5 @@
 class Client {
   request(command, body?) {
-    console.debug(`>>> Client.request`, command, body);
-
     const url = `${process.env.VUE_APP_HUB_URL}/api/${command}`;
     const init: any = {
       mode: 'cors',
@@ -19,13 +17,10 @@ class Client {
       init.method = 'GET';
     }
 
-    console.debug(`>>> preparing request`, url, init);
     const req = new Request(url, init);
-
     return new Promise((resolve, reject) => {
       fetch(req)
         .then(res => {
-          console.debug(`>>> response`, res);
           if (res.ok) {
             return resolve(res.json());
           }
