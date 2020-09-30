@@ -115,17 +115,6 @@
                 class="float-right text-white tooltipped tooltipped-n"
               />
             </div>
-            <div class="mb-1">
-              <b>Snapshot</b>
-              <a
-                :href="_bscscanLink(payload.snapshot, 'block')"
-                target="_blank"
-                class="float-right"
-              >
-                {{ $n(payload.snapshot) }}
-                <Icon name="external-link" class="ml-1" />
-              </a>
-            </div>
           </div>
         </Block>
         <BlockResults
@@ -148,7 +137,6 @@
       :selectedChoice="selectedChoice"
       :totalScore="totalScore"
       :scores="scores"
-      :snapshot="payload.snapshot"
     />
   </Container>
 </template>
@@ -209,7 +197,6 @@ export default {
       const { scores, totalScore } = await this.getPower({
         space: this.space,
         address: this.web3.account,
-        snapshot: this.payload.snapshot,
       });
       this.totalScore = totalScore;
       this.scores = scores;

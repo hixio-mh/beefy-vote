@@ -13,17 +13,6 @@
           {{ proposal.msg.payload.choices[selectedChoice - 1] }}
         </div>
         <div class="d-flex">
-          <span v-text="'Snapshot'" class="flex-auto text-gray mr-1" />
-          <a
-            :href="_bscscanLink(proposal.msg.payload.snapshot, 'block')"
-            target="_blank"
-            class="float-right"
-          >
-            {{ $n(proposal.msg.payload.snapshot) }}
-            <Icon name="external-link" class="ml-1" />
-          </a>
-        </div>
-        <div class="d-flex">
           <span v-text="'Your voting power'" class="flex-auto text-gray mr-1" />
           <span v-for="(symbol, i) of symbols" :key="symbol">
             {{ _numeral(scores[i]) }}
@@ -63,7 +52,6 @@ export default {
     'proposal',
     'id',
     'selectedChoice',
-    'snapshot',
     'totalScore',
     'scores',
   ],

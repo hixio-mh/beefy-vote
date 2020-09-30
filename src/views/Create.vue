@@ -75,14 +75,6 @@
               <span v-if="!form.end">Select end date</span>
               <span v-else v-text="$d(form.end * 1e3, 'short')" />
             </UiButton>
-            <UiButton class="width-full mb-2">
-              <input
-                v-model="form.snapshot"
-                type="number"
-                class="input width-full text-center"
-                placeholder="Snapshot block number"
-              />
-            </UiButton>
           </div>
           <UiButton
             @click="handleSubmit"
@@ -124,7 +116,6 @@ export default {
         choices: [],
         start: '',
         end: '',
-        snapshot: '',
         metadata: {},
       },
       modalOpen: false,

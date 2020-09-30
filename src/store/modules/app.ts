@@ -3,6 +3,22 @@ import ipfs from '@/helpers/ipfs';
 import rpcProvider from '@/helpers/rpc';
 import { formatProposal, formatProposals, isEmpty } from '@/helpers/utils';
 import { version } from '@/../package.json';
+import { Contract } from '@ethersproject/contracts';
+import { formatUnits } from '@ethersproject/units';
+
+const abi = require('@/helpers/abi/bep2e');
+
+export async function getScore(contract, address, decimals) {
+  const bep2e = new Contract(contract, abi, rpcProvider);
+  let balance = await bep2e.balanceOf(address);
+
+  console.log('>>>>>>>>>', 'getScore()');
+  console.log('>>>>>>>>>', 'contract', contract);
+  console.log('>>>>>>>>>', 'address', address);
+  console.log('>>>>>>>>>', 'score', balance);
+
+  return parseFloat(formatUnits(balance.toString(), decimals));
+}
 
 const mutations = {
   SEND_REQUEST() {
@@ -77,25 +93,11 @@ const actions = {
     commit('GET_PROPOSALS_REQUEST');
     try {
       let proposals: any = await client.request(`${space.address}/proposals`);
-      
-      if (proposals && !isEmpty(proposals)) {
-        const defaultStrategies = [
-          [
-            'erc20-balance-of',
-            { address: space.address, decimals: space.decimals },
-          ],
-        ];
 
-        // TODO: implement BSC scores
-        const scores: any = [];
-   
+      if (proposals && !isEmpty(proposals)) {
         proposals = Object.fromEntries(
           Object.entries(proposals).map((proposal: any) => {
-            proposal[1].score = scores.reduce(
-              (a, b) => a + b[proposal[1].address],
-              0 // FIXME: make this 0 once BSC scores have been implemented
-            );
-            
+            proposal[1].score = 888; // TODO: BSC proposal final score
             return [proposal[0], proposal[1]];
           })
         );
@@ -119,20 +121,10 @@ const actions = {
       result.votes = votes;
 
       console.log('>>>>>>>>>', 'proposal details', result.proposal.msg.payload);
-      
-      const { snapshot } = result.proposal.msg.payload;
-      const blockTag =
-        snapshot > rootState.web3.blockNumber ? 'latest' : parseInt(snapshot);
-      const defaultStrategies = [
-        [
-          'erc20-balance-of',
-          { address: payload.space.address, decimals: payload.space.decimals },
-        ],
-      ];
-      const spaceStrategies = payload.space.strategies || defaultStrategies;
-      
+        
       // TODO: implement BSC scores
       const scores: any = [];
+
       result.votes = Object.fromEntries(
         Object.entries(result.votes)
           .map((vote: any) => {
@@ -155,13 +147,7 @@ const actions = {
             .filter((vote: any) => vote.msg.payload.choice === i + 1)
             .reduce((a, b: any) => a + b.balance, 0)
         ),
-        totalScores: result.proposal.msg.payload.choices.map((choice, i) =>
-          spaceStrategies.map((strategy, sI) =>
-            Object.values(result.votes)
-              .filter((vote: any) => vote.msg.payload.choice === i + 1)
-              .reduce((a, b: any) => a + b.scores[sI], 0)
-          )
-        ),
+        totalScores: result.proposal.msg.payload.choices.map((choice, i) => 7),
         totalVotesBalances: Object.values(result.votes).reduce(
           (a, b: any) => a + b.balance,
           0
@@ -176,23 +162,21 @@ const actions = {
   getPower: async ({ commit, rootState }, { space, address, snapshot }) => {
     commit('GET_POWER_REQUEST');
     try {
-      const blockTag =
-        snapshot > rootState.web3.blockNumber ? 'latest' : parseInt(snapshot);
-      const defaultStrategies = [
-        [
-          'erc20-balance-of',
-          { address: space.address, decimals: space.decimals },
-        ],
-      ];
-      // TODO: implement BSC scores
-      let scores: any = [];
-      scores = scores.map((score: any) =>
-        Object.values(score).reduce((a, b: any) => a + b, 0)
-      );
+      let score: any = await getScore(space.address, address, space.decimals);
+      console.log('>>>>>>>', 'GET VOTING POWER', score);
+
+      const res: any = await client.request(`${space.token}/power/${snapshot}`);
+      console.log('>>>>>>>', 'res', res);
+      
+      const scores = await ipfs.get(res.ipfsHash);
+      console.log('>>>>>>>', 'scores', scores);
+
+      // TODO: review these snapshot results
+
       commit('GET_POWER_SUCCESS');
       return {
-        scores,
-        totalScore: scores.reduce((a, b: any) => a + b, 0), // FIXME: make this 0 once BSC scores have been implemented
+        scores: scores,
+        totalScore: scores.reduce((a, b: any) => a + b, 0),
       };
     } catch (e) {
       commit('GET_POWER_FAILURE', e);
