@@ -21,46 +21,51 @@ export default {
 
 <style scoped lang="scss">
 .button {
-  border: 1px solid var(--border-color);
-  background-color: transparent;
-  color: var(--link-color);
-  border-radius: 23px;
-  padding: 0 24px;
+  background-color: var(--button-base-bg);
+  color: var(--button-base-text);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 900;
   outline: none;
-  line-height: 46px;
-  height: 46px;
-  font-size: 18px;
+  transition: 0.125s all ease-out;
 
-  &.button--submit {
-    color: white;
-    background-color: var(--primary-color);
-    border: 1px solid var(--primary-color);
+  // &.button--submit {
+  //   color: white;
+  //   background-color: var(--primary-color);
+  //   border: 1px solid var(--primary-color);
 
-    &:hover {
-      color: white;
-      background-color: var(--primary-color);
-      border: 1px solid var(--primary-color);
-    }
+  //   &:hover {
+  //     color: white;
+  //     background-color: var(--primary-color);
+  //     border: 1px solid var(--primary-color);
+  //   }
 
-    &:disabled {
-      color: var(--link-color) !important;
-      border: 1px solid var(--border-color);
-      background-color: var(--border-color);
-    }
-  }
+  //   &:disabled {
+  //     color: var(--link-color) !important;
+  //     border: 1px solid var(--border-color);
+  //     background-color: var(--border-color);
+  //   }
+  // }
 
-  &.button--active {
-    border-color: var(--link-color) !important;
-  }
+  // &.button--active {
+  //   border-color: var(--link-color) !important;
+  // }
 
   &:hover {
-    color: var(--link-color);
-    border-color: var(--link-color);
+    background-color: var(--button-hover-bg);
+    color: var(--button-hover-text);
   }
 
-  &:disabled {
-    color: var(--border-color) !important;
-    cursor: not-allowed;
+  &:active {
+    background-color: var(--button-active-bg);
+    color: var(--button-active-text);
   }
+
+  // &:disabled {
+  //   color: var(--border-color) !important;
+  //   cursor: not-allowed;
+  // }
 }
 </style>

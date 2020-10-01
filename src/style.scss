@@ -3,14 +3,20 @@
 @import './assets/fonts/iconfont.css';
 
 :root {
-  --primary-color: #5a8f69;
-  --bg-color: #fbf9f6;
-  --text-color: #000;
-  --link-color: #111111;
-  --heading-color: #111111;
-  --border-color: #ded9d5;
-  --header-bg: #fbf6f0;
-  --block-bg: #fbf6f0;
+  --primary-color: #f00;
+  --header-bg: #0f0;
+  --bg-color: #00f;
+  --border-color: #ff0;
+  --text-color: #f0f;
+  --link-color: #0ff;
+  --heading-color: #fff;
+
+  --button-base-bg: #f00;
+  --button-base-text: #0f0;
+  --button-hover-bg: #00f;
+  --button-hover-text: #f0f;
+  --button-active-bg: #ff0;
+  --button-active-text: #0ff;
 }
 
 * {
@@ -28,13 +34,6 @@ body,
 
 * {
   outline: none !important;
-}
-
-h1,
-h2,
-h3,
-h4 {
-  color: var(--heading-color);
 }
 
 p {

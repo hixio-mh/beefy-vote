@@ -1,9 +1,16 @@
 .beefy {
-  --primary-color: #f0f;
-  --header-bg: #f00;
-  --bg-color: #fbf9f6;
-  --border-color: #0ff;
-  --text-color: #0f0;
-  --link-color: #00f;
-  --heading-color: #f90;
+  --primary-color: #f00;
+  --header-bg: #0f0;
+  --bg-color: #00f;
+  --border-color: #ff0;
+  --text-color: #f0f;
+  --link-color: #0ff;
+  --heading-color: #fff;
+
+  --button-base-bg: #000;
+  --button-base-text: #fff;
+  --button-hover-bg: #5a8f69;
+  --button-hover-text: #fff;
+  --button-active-bg: #82B08F;
+  --button-active-text: #000;
 }
