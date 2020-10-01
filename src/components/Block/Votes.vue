@@ -62,7 +62,9 @@ export default {
       return Object.entries(this.votes).sort((a, b) => b[1].score - a[1].score);
     },
     visibleVotes() {
-      return this.showAllVotes ? this.sortedVotes : this.sortedVotes.slice(0, 10);
+      return this.showAllVotes
+        ? this.sortedVotes
+        : this.sortedVotes.slice(0, 10);
     },
     titles() {
       return [this.space.symbol];
