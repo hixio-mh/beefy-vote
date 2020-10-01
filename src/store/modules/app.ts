@@ -107,10 +107,9 @@ const actions = {
       result.votes = votes;
       // !- Fetch proposal
 
+      // -- Fetch power
       const payload = result.proposal.msg.payload;
       const snapshot = 'pilot.json'; // FIXME: restore snapshot = payload.start
-
-      // -- Fetch power
       const res: any = await client.request(`${space.token}/snapshot/${snapshot}`);
       const scores = await ipfs.get(res[snapshot]);
       // FIXME: BigNum to avoid parse issues
@@ -118,13 +117,30 @@ const actions = {
 
       result.scores = scores;
       result.totalScore = Object.values(scores).reduce((a, b: any) => a + b, 0);
-      result.score = scores[address] || scores[address.toLowerCase()];
+      result.score = scores[address.toLowerCase()];
       // !- Fetch power
 
       // -- Calculate results
+      Object.keys(result.votes).forEach(k => { 
+        result.votes[k].score = scores[k.toLowerCase()];
+      });
+      
       result.results = {};
 
+      result.results.totalVotes = payload.choices.map((choice, i) =>
+        Object.values(result.votes).filter(
+          (vote: any) => vote.msg.payload.choice === i + 1
+        ).length 
+      );
+      console.log('>>>>>>>>>>>>', 'result.results.totalVotes', result.results.totalVotes);
 
+      result.results.totalScores = payload.choices.map((choice, i) =>
+        Object.values(result.votes)
+          .filter((vote: any) => vote.msg.payload.choice === i + 1)
+          .reduce((a, b: any) => a + b.score, 0)
+      )
+      console.log('>>>>>>>>>>>>', 'result.results.totalScores', result.results.totalScores);
+      
       // !- Calculate results
 
       commit('GET_PROPOSAL_SUCCESS');
