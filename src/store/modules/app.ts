@@ -4,7 +4,7 @@ import rpcProvider from '@/helpers/rpc';
 import { formatProposal, formatProposals, isEmpty } from '@/helpers/utils';
 import { version } from '@/../package.json';
 import { Contract } from '@ethersproject/contracts';
-import { formatUnits } from '@ethersproject/units';
+import { formatUnits, parseUnits } from '@ethersproject/units';
 import abi from '@/helpers/abi/bep2e.json';
 
 export async function getScore(contract, address, decimals) {
@@ -160,18 +160,17 @@ const actions = {
     try {
       // FIXME: remove this post pilot
       snapshot = 'pilot.json';
+
       const res: any = await client.request(`${space.token}/snapshot/${snapshot}`);
       const scores = await ipfs.get(res[snapshot]);
-      console.log('>>>>>>>', 'scores', scores);
-
-      // TODO: review these snapshot results
-
-      // const scores = [];
+      
+      // FIXME: BigNum to avoid parse issues
+      Object.keys(scores).forEach(k => scores[k] = parseFloat(scores[k]));
 
       commit('GET_POWER_SUCCESS');
       return {
         scores: scores,
-        totalScore: scores.reduce((a, b: any) => a + b, 0),
+        totalScore: Object.values(scores).reduce((a, b: any) => a + b, 0),
       };
     } catch (e) {
       commit('GET_POWER_FAILURE', e);

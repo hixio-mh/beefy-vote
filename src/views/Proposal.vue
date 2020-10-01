@@ -200,6 +200,8 @@ export default {
       });
       this.totalScore = totalScore;
       this.scores = scores;
+
+      console.log('>>>>', 'totalScore', totalScore);
     },
   },
   async created() {
