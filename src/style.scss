@@ -7,8 +7,8 @@
   --header-bg: #0f0;
   --bg-color: #00f;
   --border-color: #ff0;
-  --text-color: #f0f;
-  --link-color: #0ff;
+  --text-color: #53AEA3;
+  --link-color: #53AEA3;
   --heading-color: #fff;
 
   --button-base-bg: #f00;
@@ -17,6 +17,8 @@
   --button-hover-text: #f0f;
   --button-active-bg: #ff0;
   --button-active-text: #0ff;
+  --button-disabled-bg: #888;
+  --button-disabled-text: #fff;
 }
 
 * {
@@ -141,10 +143,6 @@ textarea {
 
 .text-white {
   color: var(--link-color) !important;
-}
-
-.block-bg {
-  background-color: var(--block-bg) !important;
 }
 
 .tab {

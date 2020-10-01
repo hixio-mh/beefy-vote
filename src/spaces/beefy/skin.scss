@@ -1,7 +1,7 @@
 .beefy {
   --primary-color: #f00;
-  --header-bg: #0f0;
-  --bg-color: #00f;
+  --header-bg: #f8f2ec;
+  --bg-color: #fbf9f6;
   --border-color: #ff0;
   --text-color: #f0f;
   --link-color: #0ff;
@@ -13,4 +13,6 @@
   --button-hover-text: #fff;
   --button-active-bg: #82B08F;
   --button-active-text: #000;
+  --button-disabled-bg: #888;
+  --button-disabled-text: #fff;
 }

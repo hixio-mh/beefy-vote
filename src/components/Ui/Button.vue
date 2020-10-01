@@ -31,28 +31,6 @@ export default {
   outline: none;
   transition: 0.125s all ease-out;
 
-  // &.button--submit {
-  //   color: white;
-  //   background-color: var(--primary-color);
-  //   border: 1px solid var(--primary-color);
-
-  //   &:hover {
-  //     color: white;
-  //     background-color: var(--primary-color);
-  //     border: 1px solid var(--primary-color);
-  //   }
-
-  //   &:disabled {
-  //     color: var(--link-color) !important;
-  //     border: 1px solid var(--border-color);
-  //     background-color: var(--border-color);
-  //   }
-  // }
-
-  // &.button--active {
-  //   border-color: var(--link-color) !important;
-  // }
-
   &:hover {
     background-color: var(--button-hover-bg);
     color: var(--button-hover-text);
@@ -63,9 +41,10 @@ export default {
     color: var(--button-active-text);
   }
 
-  // &:disabled {
-  //   color: var(--border-color) !important;
-  //   cursor: not-allowed;
-  // }
+  &:disabled {
+    background-color: var(--button-disabled-bg);
+    color: var(--button-disabled-text);
+    cursor: not-allowed;
+  }
 }
 </style>
