@@ -178,11 +178,13 @@ export default {
   },
   watch: {
     'web3.account': async function(val, prev) {
-      if (val && val.toLowerCase() !== prev) await this.loadProposal();
+      if (val && val.toLowerCase() !== prev) {
+        this.init();
+      }
     },
   },
   methods: {
-    ...mapActions(['getProposal']),
+    ...mapActions(['init', 'getProposal']),
     async loadProposal() {
       if (!this.web3.account) {
         return;

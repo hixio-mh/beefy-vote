@@ -46,6 +46,11 @@ export default {
       return orderBy(list, ['favorite'], ['desc']);
     },
   },
+  watch: {
+    'web3.account': async function(val, prev) {
+      if (val && val.toLowerCase() !== prev) this.loadFavoriteSpaces();
+    },
+  },
   methods: {
     ...mapActions([
       'loadFavoriteSpaces',

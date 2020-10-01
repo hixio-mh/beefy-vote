@@ -1,10 +1,7 @@
 import client from '@/helpers/client';
 import ipfs from '@/helpers/ipfs';
-import rpcProvider from '@/helpers/rpc';
 import { formatProposal, formatProposals, isEmpty } from '@/helpers/utils';
 import { version } from '@/../package.json';
-import { Contract } from '@ethersproject/contracts';
-import { formatUnits } from '@ethersproject/units';
 
 const mutations = {
   SEND_REQUEST() {
