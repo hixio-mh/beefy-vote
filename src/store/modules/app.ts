@@ -164,14 +164,19 @@ const actions = {
   getPower: async ({ commit, rootState }, { space, address, snapshot }) => {
     commit('GET_POWER_REQUEST');
     try {
-      const score: any = await getScore(space.address, address, space.decimals);
       console.log('>>>>>>>', 'GET VOTING POWER', score);
+      console.log('>>>>>>>', 'space', space);
+      console.log('>>>>>>>', 'address', address);
+      console.log('>>>>>>>', 'snapshot', snapshot);
 
-      const res: any = await client.request(`${space.token}/power/${snapshot}`);
-      console.log('>>>>>>>', 'res', res);
+      // TODO: disabled old snapshot
+      // const score: any = await getScore(space.address, address, space.decimals);
+
+      // const res: any = await client.request(`${space.token}/snapshot/${snapshot}`);
+      // console.log('>>>>>>>', 'res', res);
       
-      const scores = await ipfs.get(res.ipfsHash);
-      console.log('>>>>>>>', 'scores', scores);
+      // const scores = await ipfs.get(res.ipfsHash);
+      // console.log('>>>>>>>', 'scores', scores);
 
       // TODO: review these snapshot results
 
