@@ -30,7 +30,7 @@
             <template v-if="$auth.isAuthenticated">
               <UiButton
                 @click="modalOpen = true"
-                class="button-outline"
+                class="button-header"
                 :loading="loading"
               >
                 <Avatar
@@ -45,6 +45,7 @@
             <UiButton
               v-if="!$auth.isAuthenticated"
               @click="modalOpen = true"
+              class="button-header"
               :loading="loading"
             >
               Connect<span class="hide-sm" v-text="' wallet'" />

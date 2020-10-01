@@ -29,7 +29,7 @@ export default {
   font-size: 1rem;
   font-weight: 900;
   outline: none;
-  transition: 0.125s all ease-out;
+  transition: 0.1s all ease-out;
 
   &:hover {
     background-color: var(--button-hover-bg);
@@ -45,6 +45,20 @@ export default {
     background-color: var(--button-disabled-bg);
     color: var(--button-disabled-text);
     cursor: not-allowed;
+  }
+  
+  &.button-header {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+   
+    &:hover {
+      background-color: var(--bg-color);
+    }
+   
+    &:active {
+      background-color: var(--button-active-bg);
+      color: var(--button-active-text) !important;
+    }
   }
 }
 </style>
