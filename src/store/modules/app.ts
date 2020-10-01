@@ -87,6 +87,13 @@ const actions = {
     commit('GET_PROPOSALS_REQUEST');
     try {
       const proposals: any = await client.request(`${space.address}/proposals`);
+
+      if (proposals && !isEmpty(proposals)) {
+        Object.keys(proposals).forEach(k => { 
+          proposals[k].score = proposals[k].score || 0;
+        });
+      }
+
       commit('GET_PROPOSALS_SUCCESS');
       return formatProposals(proposals);
     } catch (e) {
