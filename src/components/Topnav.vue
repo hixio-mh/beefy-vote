@@ -50,7 +50,7 @@
             >
               Connect<span class="hide-sm" v-text="' wallet'" />
             </UiButton>
-            <UiButton @click="modalAboutOpen = true" class="ml-2">
+            <UiButton @click="modalAboutOpen = true" class="ml-2 button-header">
               <span v-text="'?'" class="ml-n1 mr-n1" />
             </UiButton>
           </div>
