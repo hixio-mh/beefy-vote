@@ -154,6 +154,7 @@ const actions = {
       commit('GET_PROPOSAL_FAILURE', e);
     }
   },
+  
   getPower: async ({ commit, rootState }, { space, address, snapshot }) => {
     commit('GET_POWER_REQUEST');
     try {

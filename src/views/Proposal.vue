@@ -137,6 +137,7 @@
       :selectedChoice="selectedChoice"
       :totalScore="totalScore"
       :scores="scores"
+      :score="score"
     />
   </Container>
 </template>
@@ -200,6 +201,7 @@ export default {
       });
       this.totalScore = totalScore;
       this.scores = scores;
+      this.score = scores[this.web3.account] || scores[this.web3.account.toLowerCase()];
     },
   },
   async created() {

@@ -15,7 +15,7 @@
         <div class="d-flex">
           <span v-text="'Your voting power'" class="flex-auto text-gray mr-1" />
           <span v-for="(symbol, i) of symbols" :key="symbol">
-            {{ _numeral(scores[i]) }}
+            {{ _numeral(score) }}
             {{ symbol }}
             <span v-show="i !== symbols.length - 1" v-text="'+'" class="mr-1" />
           </span>
@@ -54,6 +54,7 @@ export default {
     'selectedChoice',
     'totalScore',
     'scores',
+    'score',
   ],
   data() {
     return {
