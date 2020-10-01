@@ -2,7 +2,7 @@ import { WebSocketProvider } from '@ethersproject/providers';
 import config from '@/helpers/config';
 
 let provider;
-const chainId = process.env.VUE_APP_CHAIN_ID || '56';
+const chainId = '56';
 const url: any = config.networks[chainId].ws_url;
 if (url) provider = new WebSocketProvider(url);
 

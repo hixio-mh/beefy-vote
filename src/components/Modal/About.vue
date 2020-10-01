@@ -59,8 +59,8 @@ export default {
   data() {
     return {
       pkg,
-      hubUrl: process.env.VUE_APP_HUB_URL,
-      ipfsNode: process.env.VUE_APP_IPFS_NODE,
+      hubUrl: 'https://beefy-vote-api.herokuapp.com',
+      ipfsNode: 'ipfs.io',
     };
   },
 };

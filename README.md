@@ -21,7 +21,7 @@ Opinionated Code Formatter
 Required env vars:
 
 VUE_APP_CHAIN_ID=56  
-VUE_APP_HUB_URL=https://beefy-vote-api-stage.herokuapp.com
+VUE_APP_HUB_URL=https://beefy-vote-api.herokuapp.com
 VUE_APP_IPFS_NODE=ipfs.io
 
 ## License

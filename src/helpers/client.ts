@@ -1,6 +1,6 @@
 class Client {
   request(command, body?) {
-    const url = `${process.env.VUE_APP_HUB_URL}/api/${command}`;
+    const url = `https://beefy-vote-api.herokuapp.com/api/${command}`;
     const init: any = {
       mode: 'cors',
       cache: 'default',
