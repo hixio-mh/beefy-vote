@@ -140,6 +140,9 @@ const actions = {
           .reduce((a, b: any) => a + b.score, 0)
       )
       console.log('>>>>>>>>>>>>', 'result.results.totalScores', result.results.totalScores);
+
+      result.results.totalVoteScores = result.results.totalScores.reduce((a, b: any) => a + b, 0);
+      console.log('>>>>>>>>>>>>', 'result.results.totalVoteScores', result.results.totalVoteScores);
       
       // !- Calculate results
 

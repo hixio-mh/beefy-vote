@@ -17,15 +17,8 @@
         class="flex-auto text-center text-white"
       />
       <div class="column text-right text-white">
-        <span
-          class="tooltipped tooltipped-n"
-          :aria-label="
-            vote.scores
-              .map((score, index) => `${_numeral(score)} ${titles[index]}`)
-              .join(' + ')
-          "
-        >
-          {{ `${_numeral(vote.balance)} ${_shorten(space.symbol, 'symbol')}` }}
+        <span class="tooltipped tooltipped-n" :aria-label="vote.score">
+          {{ `${_numeral(vote.score)} ${_shorten(space.symbol, 'symbol')}` }}
         </span>
         <a
           @click="openReceiptModal(vote)"

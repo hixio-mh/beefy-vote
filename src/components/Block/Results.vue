@@ -3,8 +3,8 @@
     <div v-for="(choice, i) in payload.choices" :key="i">
       <div class="text-white mb-1">
         <span v-text="_shorten(choice, 'choice')" class="mr-1" />
-        <span v-if="results.totalBalances[i]" class="mr-1">
-          {{ _numeral(results.totalBalances[i]) }}
+        <span v-if="results.totalScores[i]" class="mr-1">
+          {{ _numeral(results.totalScores[i]) }}
           {{ _shorten(space.symbol, 'symbol') }}
         </span>
 
@@ -12,10 +12,10 @@
           class="float-right"
           v-text="
             $n(
-              !results.totalVotesBalances
+              !results.totalVotesScores
                 ? 0
-                : ((100 / results.totalVotesBalances) *
-                    results.totalBalances[i]) /
+                : ((100 / results.totalVotesScores) *
+                    results.totalScores[i]) /
                     1e2,
               'percent'
             )
@@ -24,7 +24,7 @@
       </div>
       <UiProgress
         :value="results.totalScores[i]"
-        :max="results.totalVotesBalances"
+        :max="results.totalVotesScores"
         :titles="titles"
         class="mb-3"
       />
@@ -60,7 +60,7 @@ export default {
           return {
             address: vote[0],
             choice: vote[1].msg.payload.choice,
-            balance: vote[1].balance,
+            balance: vote[1].score,
             timestamp: vote[1].msg.timestamp,
             dateUtc: new Date(
               parseInt(vote[1].msg.timestamp) * 1e3
