@@ -10,12 +10,6 @@ import abi from '@/helpers/abi/bep2e.json';
 export async function getScore(contract, address, decimals) {
   const bep2e = new Contract(contract, abi, rpcProvider);
   const balance = await bep2e.balanceOf(address);
-
-  console.log('>>>>>>>>>', 'getScore()');
-  console.log('>>>>>>>>>', 'contract', contract);
-  console.log('>>>>>>>>>', 'address', address);
-  console.log('>>>>>>>>>', 'score', balance);
-
   return parseFloat(formatUnits(balance.toString(), decimals));
 }
 
@@ -164,21 +158,15 @@ const actions = {
   getPower: async ({ commit, rootState }, { space, address, snapshot }) => {
     commit('GET_POWER_REQUEST');
     try {
-      console.log('>>>>>>>', 'GET VOTING POWER', score);
-      console.log('>>>>>>>', 'space', space);
-      console.log('>>>>>>>', 'address', address);
-      console.log('>>>>>>>', 'snapshot', snapshot);
-
-      // TODO: disabled old snapshot
-      // const score: any = await getScore(space.address, address, space.decimals);
-
-      // const res: any = await client.request(`${space.token}/snapshot/${snapshot}`);
-      // console.log('>>>>>>>', 'res', res);
-      
-      // const scores = await ipfs.get(res.ipfsHash);
-      // console.log('>>>>>>>', 'scores', scores);
+      // FIXME: remove this post pilot
+      snapshot = 'pilot.json';
+      const res: any = await client.request(`${space.token}/snapshot/${snapshot}`);
+      const scores = await ipfs.get(res[snapshot]);
+      console.log('>>>>>>>', 'scores', scores);
 
       // TODO: review these snapshot results
+
+      // const scores = [];
 
       commit('GET_POWER_SUCCESS');
       return {
