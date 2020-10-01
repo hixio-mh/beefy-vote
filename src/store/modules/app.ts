@@ -5,13 +5,6 @@ import { formatProposal, formatProposals, isEmpty } from '@/helpers/utils';
 import { version } from '@/../package.json';
 import { Contract } from '@ethersproject/contracts';
 import { formatUnits } from '@ethersproject/units';
-import abi from '@/helpers/abi/bep2e.json';
-
-export async function getScore(contract, address, decimals) {
-  const bep2e = new Contract(contract, abi, rpcProvider);
-  const balance = await bep2e.balanceOf(address);
-  return parseFloat(formatUnits(balance.toString(), decimals));
-}
 
 const mutations = {
   SEND_REQUEST() {
@@ -126,6 +119,9 @@ const actions = {
       Object.keys(result.votes).forEach(k => {
         result.votes[k].score = scores[k.toLowerCase()];
       });
+
+      // TODO: filter 0 votes
+      // TODO: sort
 
       result.results = {};
 
