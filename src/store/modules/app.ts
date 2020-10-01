@@ -118,9 +118,6 @@ const actions = {
         if(result.votes[k].score === undefined) { delete result.votes[k]; }
       });
 
-      // TODO: filter 0 votes
-      // TODO: sort
-
       result.results = {};
 
       result.results.totalVotes = payload.choices.map(
