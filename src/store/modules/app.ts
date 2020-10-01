@@ -5,8 +5,7 @@ import { formatProposal, formatProposals, isEmpty } from '@/helpers/utils';
 import { version } from '@/../package.json';
 import { Contract } from '@ethersproject/contracts';
 import { formatUnits } from '@ethersproject/units';
-
-const abi = require('@/helpers/abi/bep2e');
+import abi from '@/helpers/abi/bep2e.json';
 
 export async function getScore(contract, address, decimals) {
   const bep2e = new Contract(contract, abi, rpcProvider);
@@ -162,7 +161,7 @@ const actions = {
   getPower: async ({ commit, rootState }, { space, address, snapshot }) => {
     commit('GET_POWER_REQUEST');
     try {
-      let score: any = await getScore(space.address, address, space.decimals);
+      const score: any = await getScore(space.address, address, space.decimals);
       console.log('>>>>>>>', 'GET VOTING POWER', score);
 
       const res: any = await client.request(`${space.token}/power/${snapshot}`);
