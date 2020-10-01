@@ -82,26 +82,18 @@ const actions = {
       return;
     }
   },
+
   getProposals: async ({ commit, rootState }, space) => {
     commit('GET_PROPOSALS_REQUEST');
     try {
       const proposals: any = await client.request(`${space.address}/proposals`);
-
-      // TODO: restore proposal score calc
-      // if (proposals && !isEmpty(proposals)) {
-      //   proposals = Object.fromEntries(
-      //     Object.entries(proposals).map((proposal: any) => {
-      //       proposal[1].score = 888; // TODO: BSC proposal final score
-      //       return [proposal[0], proposal[1]];
-      //     })
-      //   );
-      // }
       commit('GET_PROPOSALS_SUCCESS');
       return formatProposals(proposals);
     } catch (e) {
       commit('GET_PROPOSALS_FAILURE', e);
     }
   },
+
   getProposal: async ({ commit, rootState }, payload) => {
     commit('GET_PROPOSAL_REQUEST');
     try {
@@ -114,7 +106,7 @@ const actions = {
       result.proposal.ipfsHash = payload.id;
       result.votes = votes;
 
-      console.log('>>>>>>>>>', 'result', result);
+      console.log('>>>>>>>>>', 'votes', votes);
         
       // TODO: implement BSC scores
       const scores: any = [];
