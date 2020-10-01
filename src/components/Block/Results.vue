@@ -10,7 +10,14 @@
 
         <span
           class="float-right"
-          v-text="$n(results.totalVoteScores ? results.totalScores[i] / results.totalVoteScores : 0, 'percent')"
+          v-text="
+            $n(
+              results.totalVoteScores
+                ? results.totalScores[i] / results.totalVoteScores
+                : 0,
+              'percent'
+            )
+          "
         />
       </div>
       <UiProgress

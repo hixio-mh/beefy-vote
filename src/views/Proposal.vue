@@ -184,8 +184,10 @@ export default {
   methods: {
     ...mapActions(['getProposal']),
     async loadProposal() {
-      if (!this.web3.account) { return; }
-      
+      if (!this.web3.account) {
+        return;
+      }
+
       const proposalObj = await this.getProposal({
         space: this.space,
         id: this.id,

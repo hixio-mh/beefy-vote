@@ -47,17 +47,17 @@ export default {
     color: var(--button-disabled-text);
     cursor: not-allowed;
   }
-  
+
   &.button-header {
     background-color: transparent;
     color: #000;
     border: 1px solid var(--border-color);
-   
+
     &:hover {
       background-color: var(--bg-color);
       border: 1px solid var(--bg-color);
     }
-   
+
     &:active {
       background-color: var(--button-active-bg);
       border: 1px solid var(--button-active-bg);

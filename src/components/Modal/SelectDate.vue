@@ -11,9 +11,19 @@
         <h3 class="m-4 mb-0 text-center">Select {{ selectedDate }} time</h3>
         <div class="d-flex m-4 mx-auto" style="max-width: 160px;">
           <UiButton class="px-0 width-fit">
-            <input v-model="form.h" min="0" max="24" class="input text-center col-5" />
+            <input
+              v-model="form.h"
+              min="0"
+              max="24"
+              class="input text-center col-5"
+            />
             <span class="col-2">:</span>
-            <input v-model="form.m" min="0" max="60" class="input text-center col-5" />
+            <input
+              v-model="form.m"
+              min="0"
+              max="60"
+              class="input text-center col-5"
+            />
           </UiButton>
         </div>
       </div>
