@@ -120,21 +120,23 @@ const actions = {
       result.proposal.ipfsHash = payload.id;
       result.votes = votes;
 
-      console.log('>>>>>>>>>', 'proposal details', result.proposal.msg.payload);
+      console.log('>>>>>>>>>', 'result', result);
         
       // TODO: implement BSC scores
       const scores: any = [];
 
-      result.votes = Object.fromEntries(
-        Object.entries(result.votes)
-          .map((vote: any) => {
-            vote[1].scores = 0; // FIXME: make this 0 once BSC scores have been implemented
-            vote[1].balance = 0; 
-            return vote;
-          })
-          .sort((a, b) => b[1].balance - a[1].balance)
-          .filter(vote => vote[1].balance > 0)
-      );
+      // TODO: implement scores
+      // result.votes = Object.fromEntries(
+      //   Object.entries(result.votes)
+      //     .map((vote: any) => {
+      //       vote[1].scores = 0; // FIXME: make this 0 once BSC scores have been implemented
+      //       vote[1].balance = 0; 
+      //       return vote;
+      //     })
+      //     .sort((a, b) => b[1].balance - a[1].balance)
+      //     .filter(vote => vote[1].balance > 0)
+      // );
+
       result.results = {
         totalVotes: result.proposal.msg.payload.choices.map(
           (choice, i) =>
