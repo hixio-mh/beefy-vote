@@ -178,35 +178,31 @@ export default {
   },
   watch: {
     'web3.account': async function(val, prev) {
-      if (val && val.toLowerCase() !== prev) await this.loadPower();
+      if (val && val.toLowerCase() !== prev) await this.loadProposal();
     },
   },
   methods: {
-    ...mapActions(['getProposal', 'getPower']),
+    ...mapActions(['getProposal']),
     async loadProposal() {
+      if (!this.web3.account) { return; }
+      
       const proposalObj = await this.getProposal({
         space: this.space,
         id: this.id,
+        address: this.web3.account,
       });
+
       this.proposal = proposalObj.proposal;
       this.votes = proposalObj.votes;
       this.results = proposalObj.results;
-    },
-    async loadPower() {
-      if (!this.web3.account) { return; }
-      const { scores, totalScore } = await this.getPower({
-        space: this.space,
-        snapshot: this.payload.start,
-      });
-      this.totalScore = totalScore;
-      this.scores = scores;
-      this.score = scores[this.web3.account] || scores[this.web3.account.toLowerCase()];
+      this.totalScore = proposalObj.totalScore;
+      this.scores = proposalObj.scores;
+      this.score = proposalObj.score;
     },
   },
   async created() {
     this.loading = true;
     await this.loadProposal();
-    await this.loadPower();
     this.loading = false;
     this.loaded = true;
   },

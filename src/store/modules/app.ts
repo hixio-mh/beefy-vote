@@ -41,15 +41,6 @@ const mutations = {
   GET_PROPOSAL_FAILURE(_state, payload) {
     console.debug('GET_PROPOSAL_FAILURE', payload);
   },
-  GET_POWER_REQUEST() {
-    console.debug('GET_POWER_REQUEST');
-  },
-  GET_POWER_SUCCESS() {
-    console.debug('GET_POWER_SUCCESS');
-  },
-  GET_POWER_FAILURE(_state, payload) {
-    console.debug('GET_POWER_FAILURE', payload);
-  },
 };
 
 const actions = {
@@ -101,79 +92,45 @@ const actions = {
     }
   },
 
-  getProposal: async ({ commit, rootState }, payload) => {
+  getProposal: async ({ commit, rootState }, {space, id, address}) => {
     commit('GET_PROPOSAL_REQUEST');
     try {
       const result: any = {};
+      
+      // -- Fetch proposal
       const [proposal, votes] = await Promise.all([
-        ipfs.get(payload.id),
-        client.request(`${payload.space.address}/proposal/${payload.id}`),
+        ipfs.get(id),
+        client.request(`${space.address}/proposal/${id}`),
       ]);
       result.proposal = formatProposal(proposal);
-      result.proposal.ipfsHash = payload.id;
+      result.proposal.ipfsHash = id;
       result.votes = votes;
+      // !- Fetch proposal
 
-      console.log('>>>>>>>>>', 'votes', votes);
-        
-      // TODO: implement BSC scores
-      const scores: any = [];
+      const payload = result.proposal.msg.payload;
+      const snapshot = 'pilot.json'; // FIXME: restore snapshot = payload.start
 
-      // TODO: implement scores
-      // result.votes = Object.fromEntries(
-      //   Object.entries(result.votes)
-      //     .map((vote: any) => {
-      //       vote[1].scores = 0; // FIXME: make this 0 once BSC scores have been implemented
-      //       vote[1].balance = 0; 
-      //       return vote;
-      //     })
-      //     .sort((a, b) => b[1].balance - a[1].balance)
-      //     .filter(vote => vote[1].balance > 0)
-      // );
+      // -- Fetch power
+      const res: any = await client.request(`${space.token}/snapshot/${snapshot}`);
+      const scores = await ipfs.get(res[snapshot]);
+      // FIXME: BigNum to avoid parse issues
+      Object.keys(scores).forEach(k => scores[k] = parseFloat(scores[k]));
 
-      result.results = {
-        totalVotes: result.proposal.msg.payload.choices.map(
-          (choice, i) =>
-            Object.values(result.votes).filter(
-              (vote: any) => vote.msg.payload.choice === i + 1
-            ).length
-        ),
-        totalBalances: result.proposal.msg.payload.choices.map((choice, i) =>
-          Object.values(result.votes)
-            .filter((vote: any) => vote.msg.payload.choice === i + 1)
-            .reduce((a, b: any) => a + b.balance, 0)
-        ),
-        totalScores: result.proposal.msg.payload.choices.map((choice, i) => 7),
-        totalVotesBalances: Object.values(result.votes).reduce(
-          (a, b: any) => a + b.balance,
-          0
-        ),
-      };
+      result.scores = scores;
+      result.totalScore = Object.values(scores).reduce((a, b: any) => a + b, 0);
+      result.score = scores[address] || scores[address.toLowerCase()];
+      // !- Fetch power
+
+      // -- Calculate results
+      result.results = {};
+
+
+      // !- Calculate results
+
       commit('GET_PROPOSAL_SUCCESS');
       return result;
     } catch (e) {
       commit('GET_PROPOSAL_FAILURE', e);
-    }
-  },
-
-  getPower: async ({ commit, rootState }, { space, snapshot }) => {
-    commit('GET_POWER_REQUEST');
-    try {
-      // FIXME: remove this post pilot
-      snapshot = 'pilot.json';
-
-      const res: any = await client.request(`${space.token}/snapshot/${snapshot}`);
-      const scores = await ipfs.get(res[snapshot]);
-      
-      // FIXME: BigNum to avoid parse issues
-      Object.keys(scores).forEach(k => scores[k] = parseFloat(scores[k]));
-
-      commit('GET_POWER_SUCCESS');
-      return {
-        scores: scores,
-        totalScore: Object.values(scores).reduce((a, b: any) => a + b, 0),
-      };
-    } catch (e) {
-      commit('GET_POWER_FAILURE', e);
     }
   },
 };
