@@ -115,6 +115,7 @@ const actions = {
       // -- Calculate results
       Object.keys(result.votes).forEach(k => {
         result.votes[k].score = scores[k.toLowerCase()];
+        if(result.votes[k].score === undefined) { delete result.votes[k]; }
       });
 
       // TODO: filter 0 votes
