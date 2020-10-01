@@ -1,13 +1,6 @@
 <template>
   <Sticky class="mb-4">
-    <div
-      v-if="config.env === 'develop'"
-      class="p-3 text-center bg-blue"
-      style="color: white; font-size: 20px;"
-    >
-      This is the demo site, give it a try!
-    </div>
-    <nav id="topnav" class="border-bottom width-full bg-black">
+    <nav id="topnav" class="width-full header-bg">
       <Container>
         <div class="d-flex flex-items-center" style="height: 78px;">
           <div class="flex-auto d-flex flex-items-center">

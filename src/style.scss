@@ -92,10 +92,6 @@ textarea {
   width: 160px;
 }
 
-.anim-fade-in {
-  animation-duration: 0.6s !important;
-}
-
 .line-height-0 {
   line-height: 0;
 }
@@ -125,7 +121,7 @@ textarea {
   border-color: var(--border-color) !important;
 }
 
-.bg-gray-dark {
+.header-bg {
   background-color: var(--header-bg) !important;
 }
 
