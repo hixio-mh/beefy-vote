@@ -91,16 +91,17 @@ const actions = {
   getProposals: async ({ commit, rootState }, space) => {
     commit('GET_PROPOSALS_REQUEST');
     try {
-      let proposals: any = await client.request(`${space.address}/proposals`);
+      const proposals: any = await client.request(`${space.address}/proposals`);
 
-      if (proposals && !isEmpty(proposals)) {
-        proposals = Object.fromEntries(
-          Object.entries(proposals).map((proposal: any) => {
-            proposal[1].score = 888; // TODO: BSC proposal final score
-            return [proposal[0], proposal[1]];
-          })
-        );
-      }
+      // TODO: restore proposal score calc
+      // if (proposals && !isEmpty(proposals)) {
+      //   proposals = Object.fromEntries(
+      //     Object.entries(proposals).map((proposal: any) => {
+      //       proposal[1].score = 888; // TODO: BSC proposal final score
+      //       return [proposal[0], proposal[1]];
+      //     })
+      //   );
+      // }
       commit('GET_PROPOSALS_SUCCESS');
       return formatProposals(proposals);
     } catch (e) {

@@ -193,13 +193,15 @@ export default {
       this.results = proposalObj.results;
     },
     async loadPower() {
-      if (!this.web3.account) return;
-      const { scores, totalScore } = await this.getPower({
-        space: this.space,
-        address: this.web3.account,
-      });
-      this.totalScore = totalScore;
-      this.scores = scores;
+      if (!this.web3.account) { return; }
+      
+      // FIXME: restore power load
+      // const { scores, totalScore } = await this.getPower({
+      //   space: this.space,
+      //   address: this.web3.account,
+      // });
+      // this.totalScore = totalScore;
+      // this.scores = scores;
     },
   },
   async created() {
