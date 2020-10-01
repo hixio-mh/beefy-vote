@@ -10,7 +10,7 @@ const abi = require('@/helpers/abi/bep2e');
 
 export async function getScore(contract, address, decimals) {
   const bep2e = new Contract(contract, abi, rpcProvider);
-  let balance = await bep2e.balanceOf(address);
+  const balance = await bep2e.balanceOf(address);
 
   console.log('>>>>>>>>>', 'getScore()');
   console.log('>>>>>>>>>', 'contract', contract);

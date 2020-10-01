@@ -2,18 +2,18 @@
   <UiModal :open="open" @close="$emit('close')">
     <form @submit.prevent="handleSubmit" class="modal-body">
       <div v-if="step === 0">
-        <h3 class="m-4 text-center">Select {{ selectedDate }} date UTC</h3>
+        <h3 class="m-4 text-center">Select {{ selectedDate }} date</h3>
         <div class="modal-body m-4">
           <UiCalendar v-model="input" class="mx-auto mb-2" />
         </div>
       </div>
       <div v-else>
-        <h3 class="m-4 mb-0 text-center">Select {{ selectedDate }} time UTC</h3>
+        <h3 class="m-4 mb-0 text-center">Select {{ selectedDate }} time</h3>
         <div class="d-flex m-4 mx-auto" style="max-width: 160px;">
           <UiButton class="px-0 width-fit">
-            <input v-model="form.h" max="24" class="input text-center col-5" />
+            <input v-model="form.h" min="0" max="24" class="input text-center col-5" />
             <span class="col-2">:</span>
-            <input v-model="form.m" max="60" class="input text-center col-5" />
+            <input v-model="form.m" min="0" max="60" class="input text-center col-5" />
           </UiButton>
         </div>
       </div>
@@ -58,8 +58,8 @@ export default {
     handleSubmit() {
       if (this.step === 0) return (this.step = 1);
       const [year, month, day] = this.input.split('-');
-      let input = Date.UTC(year, month - 1, day, this.form.h, this.form.m, 0);
-      input = new Date(input).getTime() / (1e3).toFixed();
+      const date = new Date(year, month - 1, day, this.form.h, this.form.m, 0);
+      const input = date.getTime() / (1e3).toFixed();
       this.$emit('input', input);
       this.$emit('close');
     },
