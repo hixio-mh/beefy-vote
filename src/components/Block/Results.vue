@@ -10,21 +10,12 @@
 
         <span
           class="float-right"
-          v-text="
-            $n(
-              !results.totalVotesScores
-                ? 0
-                : ((100 / results.totalVotesScores) *
-                    results.totalScores[i]) /
-                    1e2,
-              'percent'
-            )
-          "
+          v-text="$n(results.totalVoteScores ? results.totalScores[i] / results.totalVoteScores : 0, 'percent')"
         />
       </div>
       <UiProgress
         :value="results.totalScores[i]"
-        :max="results.totalVotesScores"
+        :max="results.totalVoteScores"
         :titles="titles"
         class="mb-3"
       />

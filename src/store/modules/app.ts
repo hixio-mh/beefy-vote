@@ -132,17 +132,14 @@ const actions = {
           (vote: any) => vote.msg.payload.choice === i + 1
         ).length 
       );
-      console.log('>>>>>>>>>>>>', 'result.results.totalVotes', result.results.totalVotes);
-
+      
       result.results.totalScores = payload.choices.map((choice, i) =>
-        Object.values(result.votes)
-          .filter((vote: any) => vote.msg.payload.choice === i + 1)
-          .reduce((a, b: any) => a + b.score, 0)
+      Object.values(result.votes)
+      .filter((vote: any) => vote.msg.payload.choice === i + 1)
+      .reduce((a, b: any) => a + b.score, 0)
       )
-      console.log('>>>>>>>>>>>>', 'result.results.totalScores', result.results.totalScores);
-
+  
       result.results.totalVoteScores = result.results.totalScores.reduce((a, b: any) => a + b, 0);
-      console.log('>>>>>>>>>>>>', 'result.results.totalVoteScores', result.results.totalVoteScores);
       
       // !- Calculate results
 
