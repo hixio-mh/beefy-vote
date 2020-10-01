@@ -44,7 +44,7 @@
               v-text="choice"
               @click="selectedChoice = i + 1"
               class="d-block width-full mb-2"
-              :class="selectedChoice === i + 1 && 'button--active'"
+              :class="selectedChoice === i + 1 && 'active'"
             />
           </div>
           <UiButton

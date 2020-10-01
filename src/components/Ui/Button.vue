@@ -48,6 +48,10 @@ export default {
     cursor: not-allowed;
   }
 
+  &.active {
+    background-color: var(--primary-color);
+  }
+
   &.button-header {
     background-color: transparent;
     color: #000;
