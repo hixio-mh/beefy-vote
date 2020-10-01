@@ -24,7 +24,7 @@ export default {
   background-color: var(--button-base-bg);
   color: var(--button-base-text);
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 2rem;
   padding: 1rem 1.5rem;
   font-size: 1rem;
   font-weight: 900;
@@ -34,6 +34,7 @@ export default {
   &:hover {
     background-color: var(--button-hover-bg);
     color: var(--button-hover-text);
+    border-radius: 1rem;
   }
 
   &:active {
@@ -54,11 +55,25 @@ export default {
    
     &:hover {
       background-color: var(--bg-color);
+      border: 1px solid var(--bg-color);
     }
    
     &:active {
       background-color: var(--button-active-bg);
+      border: 1px solid var(--button-active-bg);
       color: var(--button-active-text) !important;
+    }
+  }
+
+  &.button-choice {
+    color: #000;
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+
+    &:hover {
+      color: white;
+      background-color: var(--button-hover-bg);
+      border: 1px solid var(--button-hover-bg);
     }
   }
 }

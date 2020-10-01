@@ -41,7 +41,7 @@
                   :key="choice.key"
                   class="d-flex mb-2"
                 >
-                  <UiButton class="d-flex width-full">
+                  <UiButton class="d-flex width-full button-choice">
                     <span class="mr-4">{{ i + 1 }}</span>
                     <input
                       v-model="choices[i].text"
