@@ -7,7 +7,9 @@
   "defaultView": "all",
   "address": "0xCa3F508B8e4Dd382eE878A314789373D80A5190A",
   "token": "0xCa3F508B8e4Dd382eE878A314789373D80A5190A",
-  "core": [],
+  "core": [
+    "0xC362FA359031A081D21Cb9d57c29e055FecbcB06"
+  ],
   "min": 0,
   "invalid": []
 }
