@@ -75,8 +75,6 @@ export default {
     border: 1px solid var(--border-color);
 
     &:hover {
-      color: white;
-      background-color: var(--button-hover-bg);
       border: 1px solid var(--button-hover-bg);
     }
   }
