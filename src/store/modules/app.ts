@@ -99,7 +99,7 @@ const actions = {
 
       // -- Fetch power
       const payload = result.proposal.msg.payload;
-      const snapshot = 'pilot.json'; // FIXME: restore snapshot = payload.start
+      const snapshot = payload.start;
       const res: any = await client.request(
         `${space.token}/snapshot/${snapshot}`
       );
