@@ -1,4 +1,4 @@
-# Snapshot
+#  Snapshot
 
 Snapshot is a simple website with easy to verify and hard to contest results.
 
