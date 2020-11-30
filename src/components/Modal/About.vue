@@ -25,7 +25,11 @@
         {{ pkg.license }}
       </div>
       <div class="d-flex">
-        <span v-text="'Network'" class="flex-auto text-gray mr-1" />
+        <span
+          v-if="web3.network !== undefined"
+          v-text="'Network'"
+          class="flex-auto text-gray mr-1"
+        />
         {{ web3.network.network }} ({{ web3.network.chainId }})
       </div>
       <div class="d-flex">
