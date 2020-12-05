@@ -5,7 +5,7 @@
   "connectors": {
     "injected": {
       "id": "injected",
-      "name": "MetaMask"
+      "name": "MetaMask / TrustWallet"
     },
     "walletconnect": {
       "id": "walletconnect",

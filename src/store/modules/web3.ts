@@ -41,7 +41,9 @@ const mutations = {
     console.debug('LOAD_PROVIDER_FAILURE', payload);
   },
   HANDLE_CHAIN_CHANGED(_state, chainId) {
-    // FIXME: noop
+    // FIXME: TrustWallet is sending 86 instead of 56
+    if (chainId === 86) { chainId = 56; }
+    
     Vue.set(_state, 'network', config.networks[chainId]);
     Vue.set(_state, 'spaces', spaces[chainId]);
     console.debug('HANDLE_CHAIN_CHANGED', chainId);
