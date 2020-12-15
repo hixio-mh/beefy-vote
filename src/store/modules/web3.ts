@@ -188,11 +188,18 @@ const actions = {
       return Promise.reject();
     }
   },
-  signMessage: async ({ commit }, message) => {
+  signMessage: async ({ commit }, [address, message]) => {
     commit('SIGN_MESSAGE_REQUEST');
     try {
-      const signer = web3.getSigner();
-      const sig = await signer.signMessage(message);
+      let sig;
+      // workaround for Binance Chain wallet, use bnbSign()
+      if (web3.provider.bnbSign) {
+        const bnbSig = await web3.provider.bnbSign(address, message);
+        sig = bnbSig.signature;
+      } else {
+        const signer = web3.getSigner();
+        sig = await signer.signMessage(message);
+      }
       commit('SIGN_MESSAGE_SUCCESS');
       return sig;
     } catch (e) {

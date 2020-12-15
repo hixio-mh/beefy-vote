@@ -7,6 +7,10 @@
       "id": "injected",
       "name": "MetaMask / TrustWallet"
     },
+    "binance": {
+      "id": "binance",
+      "name": "Binance Chain Wallet"
+    },
     "walletconnect": {
       "id": "walletconnect",
       "name": "WalletConnect",

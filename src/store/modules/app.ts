@@ -47,7 +47,7 @@ const actions = {
           payload,
         }),
       };
-      msg.sig = await dispatch('signMessage', msg.msg);
+      msg.sig = await dispatch('signMessage', [msg.address, msg.msg]);
       const result = await client.request('message', msg);
       commit('SEND_SUCCESS');
       dispatch('notify', ['green', `Your ${type} is in!`]);
