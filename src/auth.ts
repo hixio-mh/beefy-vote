@@ -3,10 +3,11 @@ import { LockPlugin } from '@snapshot-labs/lock/plugins/vue';
 import injected from '@snapshot-labs/lock/connectors/injected';
 import walletconnect from '@snapshot-labs/lock/connectors/walletconnect';
 
+import binance from '@/helpers/binance-connector'
 import config from '@/helpers/config';
 
 const options: any = { connectors: [] };
-const connectors = { injected, walletconnect };
+const connectors = { injected, walletconnect, binance };
 
 Object.entries(config.connectors).forEach((connector: any) => {
   options.connectors.push({
