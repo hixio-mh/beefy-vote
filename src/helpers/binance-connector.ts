@@ -5,7 +5,7 @@ export default class Connector extends LockConnector {
   async connect() {
     let provider;
     try {
-      const connector = new BscConnector({});
+      const connector = new BscConnector({ supportedChainIds: [56] });
       provider = await connector.getProvider();
       await provider.enable();
     } catch (e) {
