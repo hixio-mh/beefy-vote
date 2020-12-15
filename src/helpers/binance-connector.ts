@@ -1,8 +1,7 @@
-import { BscConnector } from "@binance-chain/bsc-connector";
-import LockConnector from "@snapshot-labs/lock/src/connector";
+import { BscConnector } from '@binance-chain/bsc-connector';
+import LockConnector from '@snapshot-labs/lock/src/connector';
 
 export default class Connector extends LockConnector {
-
   async connect() {
     let provider;
     try {
