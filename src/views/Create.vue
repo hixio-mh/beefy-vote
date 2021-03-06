@@ -141,6 +141,7 @@ export default {
         this.form.end &&
         this.form.end > this.form.start &&
         this.choices.length >= 2 &&
+        this.choices.length <= 30 &&
         !this.choices.some(a => a.text === '')
       );
     },
