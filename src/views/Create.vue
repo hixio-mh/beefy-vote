@@ -102,6 +102,8 @@
 <script>
 import { mapActions } from 'vuex';
 import draggable from 'vuedraggable';
+import ipfs from '@/helpers/ipfs';
+import client from '@/helpers/client';
 
 export default {
   components: {
@@ -166,6 +168,28 @@ export default {
     },
     async handleSubmit() {
       this.loading = true;
+
+      if (!this.web3.account) {
+        return;
+      }
+
+      // -- Fetch voting power
+      const snapshot = await client.request(
+        `${this.space.address}/snapshot/holders`
+      );
+      const addressToBIFI = await ipfs.get(snapshot.holders);
+      const userVotingPower = isNaN(
+        parseFloat(addressToBIFI[this.web3.account])
+      )
+        ? 0
+        : parseFloat(addressToBIFI[this.web3.account]);
+      // !- Fetch voting power
+
+      if (userVotingPower < this.PROPOSAL_MINIMUM_BIFI_THRESHOLD) {
+        this.loading = false;
+        return;
+      }
+
       this.form.choices = this.choices.map(choice => choice.text);
       try {
         const { ipfsHash } = await this.send({

@@ -25,6 +25,8 @@ requireComponent.keys().forEach(fileName => {
   Vue.component(componentName, componentConfig.default || componentConfig);
 });
 
+Vue.prototype.PROPOSAL_MINIMUM_BIFI_THRESHOLD = 1;
+
 Vue.component('jazzicon', Jazzicon);
 Vue.mixin(mixins);
 Vue.directive('autofocus', autofocus);
