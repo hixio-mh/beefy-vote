@@ -169,26 +169,32 @@ export default {
     async handleSubmit() {
       this.loading = true;
 
-      if (!this.web3.account) {
-        return;
-      }
+      commit('GET_HOLDERS_REQUEST');
+      try {        
+        // -- Fetch voting power
+        const snapshot = await client.request(
+          `${this.space.address}/snapshot/holders`
+        );
+        const addressToBIFI = await ipfs.get(snapshot.holders);
+        // !- Fetch voting power
+        commit('GET_HOLDERS_SUCCESS');
 
-      // -- Fetch voting power
-      const snapshot = await client.request(
-        `${this.space.address}/snapshot/holders`
-      );
-      const addressToBIFI = await ipfs.get(snapshot.holders);
-      const userVotingPower = isNaN(
-        parseFloat(addressToBIFI[this.web3.account])
-      )
-        ? 0
-        : parseFloat(addressToBIFI[this.web3.account]);
-      // !- Fetch voting power
+        const userVotingPower = isNaN(
+          parseFloat(addressToBIFI[this.web3.account])
+        )
+          ? 0
+          : parseFloat(addressToBIFI[this.web3.account]);
 
-      if (userVotingPower < this.PROPOSAL_MINIMUM_BIFI_THRESHOLD) {
+        if (userVotingPower < this.PROPOSAL_MINIMUM_BIFI_THRESHOLD) {
+          this.loading = false;
+          return;
+        }
+      } catch (e) {
+        commit('GET_HOLDERS_FAILURE', e);
         this.loading = false;
         return;
       }
+      
 
       this.form.choices = this.choices.map(choice => choice.text);
       try {

@@ -31,6 +31,15 @@ const mutations = {
   GET_PROPOSAL_FAILURE(_state, payload) {
     console.debug('GET_PROPOSAL_FAILURE', payload);
   },
+  GET_HOLDERS_REQUEST() {
+    console.debug('GET_HOLDERS_REQUEST');
+  },
+  GET_HOLDERS_SUCCESS() {
+    console.debug('GET_HOLDERS_SUCCESS');
+  },
+  GET_HOLDERS_FAILURE(_state, payload) {
+    console.debug('GET_HOLDERS_FAILURE', payload);
+  },
 };
 
 const actions = {
