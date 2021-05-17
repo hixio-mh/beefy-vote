@@ -159,8 +159,8 @@ export default {
   },
   async mounted() {
     this.addChoice(2);
-    this.calculateBIFI();
-    window.ethereum.on('accountsChanged', this.calculateBIFI);
+    this.calculateVotingPower();
+    window.ethereum.on('accountsChanged', this.calculateVotingPower);
   },
   methods: {
     ...mapActions(['send', 'getHolders']),
@@ -200,7 +200,7 @@ export default {
         this.loading = false;
       }
     },
-    async calculateBIFI() {
+    async calculateVotingPower() {
       // -- Fetching Voting Power
       const addressToBIFI = await this.getHolders(this.space);
       const userVotingPower = isNaN(
