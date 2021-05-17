@@ -157,6 +157,27 @@ const actions = {
       commit('GET_PROPOSAL_FAILURE', e);
     }
   },
+
+  getHolders: async ({ commit }, space) => {
+    commit('GET_HOLDERS_REQUEST');
+    try {
+      // -- Fetch /holders snapshot
+      const snapshot: any = await client.request(
+        `${space.address}/snapshot/holders`
+      );
+      // !- Fetch /holders snapshot
+
+      // -- Fetch address:BIFI
+      const holders = await ipfs.get(snapshot.holders);
+      // !- Fetch address:BIFI
+
+      commit('GET_HOLDERS_SUCCESS');
+      return holders;
+    } catch (e) {
+      commit('GET_HOLDERS_FAILURE', e);
+      return;
+    }
+  },
 };
 
 export default {

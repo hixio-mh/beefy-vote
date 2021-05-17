@@ -86,6 +86,10 @@
           >
             Publish
           </UiButton>
+          <h6 class="text-center">
+            You need at least {{ this.PROPOSAL_MINIMUM_BIFI_THRESHOLD }} BIFI to
+            create a proposal
+          </h6>
         </Block>
       </div>
     </div>
@@ -102,8 +106,6 @@
 <script>
 import { mapActions } from 'vuex';
 import draggable from 'vuedraggable';
-import ipfs from '@/helpers/ipfs';
-import client from '@/helpers/client';
 
 export default {
   components: {
@@ -151,7 +153,7 @@ export default {
     this.addChoice(2);
   },
   methods: {
-    ...mapActions(['send']),
+    ...mapActions(['send', 'getHolders']),
     addChoice(num) {
       for (let i = 1; i <= num; i++) {
         this.counter++;
@@ -169,15 +171,8 @@ export default {
     async handleSubmit() {
       this.loading = true;
 
-      commit('GET_HOLDERS_REQUEST');
-      try {        
-        // -- Fetch voting power
-        const snapshot = await client.request(
-          `${this.space.address}/snapshot/holders`
-        );
-        const addressToBIFI = await ipfs.get(snapshot.holders);
-        // !- Fetch voting power
-        commit('GET_HOLDERS_SUCCESS');
+      try {
+        const addressToBIFI = await this.getHolders(this.space);
 
         const userVotingPower = isNaN(
           parseFloat(addressToBIFI[this.web3.account])
@@ -190,11 +185,9 @@ export default {
           return;
         }
       } catch (e) {
-        commit('GET_HOLDERS_FAILURE', e);
         this.loading = false;
         return;
       }
-      
 
       this.form.choices = this.choices.map(choice => choice.text);
       try {
