@@ -11,6 +11,16 @@
     </div>
     <div>
       <div class="col-12 col-lg-8 float-left pr-0 pr-lg-5">
+        <div
+          v-if="this.web3.account && !hasEnoughBIFI"
+          class="border-top border-bottom border-md rounded-0 rounded-md-2 mb-4 block-bg"
+        >
+          <div class="p-4">
+            <i class="iconfont iconwarning mr-1"></i>
+            You need at least {{ this.PROPOSAL_MINIMUM_BIFI_THRESHOLD }} BIFI to
+            create a proposal
+          </div>
+        </div>
         <div class="px-4 px-md-0">
           <div class="d-flex flex-column mb-6">
             <input
@@ -123,6 +133,7 @@ export default {
       modalOpen: false,
       selectedDate: '',
       counter: 0,
+      hasEnoughBIFI: false,
     };
   },
   computed: {
@@ -142,15 +153,18 @@ export default {
         this.form.end > this.form.start &&
         this.choices.length >= 2 &&
         this.choices.length <= 30 &&
-        !this.choices.some(a => a.text === '')
+        !this.choices.some(a => a.text === '') &&
+        this.hasEnoughBIFI
       );
     },
   },
-  mounted() {
+  async mounted() {
     this.addChoice(2);
+    this.calculateVotingPower();
+    window.ethereum.on('accountsChanged', this.calculateVotingPower);
   },
   methods: {
-    ...mapActions(['send']),
+    ...mapActions(['send', 'getHolders']),
     addChoice(num) {
       for (let i = 1; i <= num; i++) {
         this.counter++;
@@ -167,6 +181,7 @@ export default {
     },
     async handleSubmit() {
       this.loading = true;
+
       this.form.choices = this.choices.map(choice => choice.text);
       try {
         const { ipfsHash } = await this.send({
@@ -185,6 +200,18 @@ export default {
         console.error(e);
         this.loading = false;
       }
+    },
+    async calculateVotingPower() {
+      // -- Fetching Voting Power
+      const addressToBIFI = await this.getHolders(this.space);
+      const userVotingPower = isNaN(
+        parseFloat(addressToBIFI[this.web3.account.toLowerCase()])
+      )
+        ? 0
+        : parseFloat(addressToBIFI[this.web3.account.toLowerCase()]);
+      this.hasEnoughBIFI =
+        userVotingPower >= this.PROPOSAL_MINIMUM_BIFI_THRESHOLD ? true : false;
+      // !- Fetching Voting Power
     },
   },
 };
