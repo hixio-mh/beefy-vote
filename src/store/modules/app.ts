@@ -109,10 +109,16 @@ const actions = {
       // -- Fetch power
       const payload = result.proposal.msg.payload;
       const snapshot = payload.start;
-      const res: any = await client.request(
-        `${space.token}/snapshot/${snapshot}`
-      );
-      const scores = await ipfs.get(res[snapshot]);
+      let res: any;
+      let scores;
+      try {
+        res = await client.request(`${space.token}/snapshot/${snapshot}`);
+        scores = await ipfs.get(res[snapshot]);
+      } catch (err) {
+        res = await client.request(`${space.address}/snapshot/holders`);
+        scores = await ipfs.get(res.holders);
+      }
+
       // FIXME: BigNum to avoid parse issues
       Object.keys(scores).forEach(k => (scores[k] = parseFloat(scores[k])));
 
