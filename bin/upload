@@ -1,0 +1,8 @@
+#!/bin/bash
+set -ex
+
+TOKEN="0xCa3F508B8e4Dd382eE878A314789373D80A5190A"
+API="https://beefy-vote-api.herokuapp.com/api"
+
+curl -i -v -d "@$1" -X POST -H "Content-Type: application/json" "${API}/${TOKEN}/snapshot/$1"
+
